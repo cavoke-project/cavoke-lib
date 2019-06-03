@@ -4,14 +4,14 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="gaminal",
+    name="cavoke",
     version="0.0.1",
     author="Alex Kovrigin",
     author_email="a.kovrigin0@gmail.com",
     description="Python library for easy creation of text-based and table games",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/waleko/gaminal",
+    url="https://github.com/waleko/cavoke",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
