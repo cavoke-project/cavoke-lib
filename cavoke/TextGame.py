@@ -1,3 +1,6 @@
+from typing import Callable
+from GameServer import GameServer
+
 class TextGame(object):
     def __init__(self, game_name, author):
         self.game_name = game_name
@@ -12,3 +15,6 @@ class TextGame(object):
 
     def execWelcome(self):
         self.welcome()
+
+    def setLambda(self, f: Callable):
+        f(self)
