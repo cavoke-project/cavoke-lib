@@ -1,0 +1,61 @@
+{
+  "status": "OK/Error",
+  "response": {
+    "game": {
+      "name": "Dummy Game",
+      "author": "Teapot",
+      "game_library_id": 0,
+      "player_name": "waleko",
+      "gameId": "abcdef1234567890",
+      "status": "Playing/Finished",
+      "canvas": {
+        "w": 680,
+        "h": 480,
+        "background_image": {
+          "image": "blank"
+        },
+        "contents": [
+          {
+            "name": "player",
+            "type": "image",
+            "position": {
+              "x": 10,
+              "y": 10
+            },
+            "image_url": "player.png",
+            "clickable": true,
+            "drag": {
+              "draggable": true,
+              "dragTo": [
+                "cat"
+              ]
+            }
+          },
+          {
+            "name": "cat",
+            "type": "image",
+            "position": {
+              "x": 80,
+              "y": 430
+            },
+            "image_url": "cat.png",
+            "clickable": true,
+            "drag": {
+              "draggable": false
+            }
+          },
+          {
+            "name": "some_text",
+            "type": "text",
+            "text": "Catch the cat!",
+            "font": "Times New Roman",
+            "size": 17
+          }
+        ]
+      },
+      "text_input": {
+        "message_to_player": "Guess the password!"
+      }
+    }
+  }
+}
