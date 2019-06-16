@@ -1,7 +1,8 @@
+from cavoke import *
 
 
-game = Game(game_name="Dummy Game",
-                author='waleko')
+game = Game(game_name="Tick-tack-toe pre-pre-demo",
+            creator='waleko')
 
 
 grid = Grid(x=3, y=3, size="full")  # auto-name, grid is iterable, default base is image
