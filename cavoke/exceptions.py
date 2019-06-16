@@ -25,3 +25,8 @@ class UnitCanvasOverride(GameWarning):
 
     def __repr__(self):
         return self.message
+
+
+class CanvasUnitsCountExceeded(GameWarning):
+    "Warning raised when too many units on canvas."
+    pass
