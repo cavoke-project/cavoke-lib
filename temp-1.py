@@ -1,4 +1,4 @@
-from cavoke import *
+from src.cavoke import *
 
 
 game = Game(game_name="Tick-tack-toe pre-pre-demo",

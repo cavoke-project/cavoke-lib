@@ -1,0 +1,546 @@
+{
+  "definitions": {
+    "Unit": {
+      "name": {
+          "type": "string",
+          "title": "The Name Schema",
+          "default": "",
+          "examples": [
+            "player"
+          ],
+          "pattern": "^(.*)$"
+        },
+      "id": {
+          "type": "string",
+          "title": "The Name Schema",
+          "default": "",
+          "examples": [
+            "player"
+          ],
+          "pattern": "^(.*)$"
+        },
+      "position": {
+          "type": "object",
+          "title": "The Position Schema",
+          "required": [
+            "x",
+            "y"
+          ],
+          "properties": {
+            "x": {
+              "type": "integer",
+              "title": "The X Schema",
+              "default": 0,
+              "examples": [
+                10
+              ]
+            },
+            "y": {
+              "type": "integer",
+              "title": "The Y Schema",
+              "default": 0,
+              "examples": [
+                10
+              ]
+            }
+          }
+        },
+      "size": {
+          "type": "object",
+          "title": "The Size Schema",
+          "required": [
+            "w",
+            "h"
+          ],
+          "properties": {
+            "w": {
+              "type": "integer",
+              "title": "The W Schema",
+              "default": 0,
+              "examples": [
+                10
+              ]
+            },
+            "h": {
+              "type": "integer",
+              "title": "The H Schema",
+              "default": 0,
+              "examples": [
+                10
+              ]
+            }
+          }
+        },
+      "clickable": {
+          "type": "boolean",
+          "title": "The Clickable Schema",
+          "default": false,
+          "examples": [
+            true
+          ]
+        },
+        "drag": {
+          "type": "object",
+          "title": "The Drag Schema",
+          "required": [
+            "draggable",
+            "dragTo"
+          ],
+          "properties": {
+            "draggable": {
+              "type": "boolean",
+              "title": "The Draggable Schema",
+              "default": false,
+              "examples": [
+                true
+              ]
+            },
+            "dragTo": {
+              "type": "array",
+              "title": "The Dragto Schema",
+              "items": {
+                "type": "string",
+                "title": "The Items Schema",
+                "default": "",
+                "examples": [
+                  "cat"
+                ],
+                "pattern": "^(.*)$"
+              }
+            }
+          }
+        }
+      },
+    "Image": {
+      "type": "Unit",
+      "required": [
+        "name",
+        "position",
+        "size",
+        "image_url"
+      ],
+      "properties": {
+        "name": {
+          "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/name",
+          "type": "string",
+          "title": "The Name Schema",
+          "default": "",
+          "examples": [
+            "player"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "position": {
+          "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/position",
+          "type": "object",
+          "title": "The Position Schema",
+          "required": [
+            "x",
+            "y"
+          ],
+          "properties": {
+            "x": {
+              "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/position/properties/x",
+              "type": "integer",
+              "title": "The X Schema",
+              "default": 0,
+              "examples": [
+                10
+              ]
+            },
+            "y": {
+              "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/position/properties/y",
+              "type": "integer",
+              "title": "The Y Schema",
+              "default": 0,
+              "examples": [
+                10
+              ]
+            }
+          }
+        },
+        "size": {
+          "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/size",
+          "type": "object",
+          "title": "The Size Schema",
+          "required": [
+            "w",
+            "h"
+          ],
+          "properties": {
+            "w": {
+              "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/size/properties/w",
+              "type": "integer",
+              "title": "The W Schema",
+              "default": 0,
+              "examples": [
+                10
+              ]
+            },
+            "h": {
+              "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/size/properties/h",
+              "type": "integer",
+              "title": "The H Schema",
+              "default": 0,
+              "examples": [
+                10
+              ]
+            }
+          }
+        },
+        "image_url": {
+          "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/image_url",
+          "type": "string",
+          "title": "The Image_url Schema",
+          "default": "",
+          "examples": [
+            "player.png"
+          ],
+          "pattern": "^(.*)$"
+        },
+
+      }
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "status",
+    "response"
+  ],
+  "properties": {
+    "status": {
+      "$id": "#/properties/status",
+      "type": "string",
+      "title": "The Status Schema",
+      "default": "",
+      "examples": [
+        "OK",
+        "Error"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "response": {
+      "$id": "#/properties/response",
+      "type": "object",
+      "title": "The Response Schema",
+      "required": [
+        "game"
+      ],
+      "properties": {
+        "game": {
+          "$id": "#/properties/response/properties/game",
+          "type": "object",
+          "title": "The Game Schema",
+          "required": [
+            "name",
+            "author",
+            "gameId",
+            "status",
+            "display"
+          ],
+          "properties": {
+            "name": {
+              "$id": "#/properties/response/properties/game/properties/name",
+              "type": "string",
+              "title": "The Name Schema",
+              "default": "",
+              "examples": [
+                "Dummy Game"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "author": {
+              "$id": "#/properties/response/properties/game/properties/author",
+              "type": "string",
+              "title": "The Author Schema",
+              "default": "",
+              "examples": [
+                "Teapot"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "gameId": {
+              "$id": "#/properties/response/properties/game/properties/gameId",
+              "type": "string",
+              "title": "The Gameid Schema",
+              "default": "",
+              "examples": [
+                "47e7ce50763101ef364ea7a5dc6b1c57f99797037fab7d62437ca1674b3fe35a"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "status": {
+              "$id": "#/properties/response/properties/game/properties/status",
+              "type": "string",
+              "title": "The Status Schema",
+              "default": "",
+              "examples": [
+                "Playing/Finished"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "display": {
+              "$id": "#/properties/response/properties/game/properties/display",
+              "type": "object",
+              "title": "The Display Schema",
+              "required": [
+                "canvas",
+                "alert_box",
+                "text_input"
+              ],
+              "properties": {
+                "canvas": {
+                  "$id": "#/properties/response/properties/game/properties/display/properties/canvas",
+                  "type": "object",
+                  "title": "The Canvas Schema",
+                  "required": [
+                    "w",
+                    "h",
+                    "background_image",
+                    "contents"
+                  ],
+                  "properties": {
+                    "w": {
+                      "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/w",
+                      "type": "integer",
+                      "title": "The W Schema",
+                      "default": 0,
+                      "examples": [
+                        680
+                      ]
+                    },
+                    "h": {
+                      "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/h",
+                      "type": "integer",
+                      "title": "The H Schema",
+                      "default": 0,
+                      "examples": [
+                        480
+                      ]
+                    },
+                    "background_image": {
+                      "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/background_image",
+                      "type": "object",
+                      "title": "The Background_image Schema",
+                      "required": [
+                        "image"
+                      ],
+                      "properties": {
+                        "image": {
+                          "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/background_image/properties/image",
+                          "type": "string",
+                          "title": "The Image Schema",
+                          "default": "",
+                          "examples": [
+                            "blank"
+                          ],
+                          "pattern": "^(.*)$"
+                        }
+                      }
+                    },
+                    "contents": {
+                      "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents",
+                      "type": "array",
+                      "title": "The Contents Schema",
+                      "items": {
+                        "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items",
+                        "type": "object",
+                        "title": "The Items Schema",
+                        "required": [
+                          "name",
+                          "type",
+                          "position",
+                          "size",
+                          "image_url",
+                          "clickable",
+                          "drag"
+                        ],
+                        "properties": {
+                          "name": {
+                            "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/name",
+                            "type": "string",
+                            "title": "The Name Schema",
+                            "default": "",
+                            "examples": [
+                              "player"
+                            ],
+                            "pattern": "^(.*)$"
+                          },
+                          "type": {
+                            "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/type",
+                            "type": "string",
+                            "title": "The Type Schema",
+                            "default": "",
+                            "examples": [
+                              "image"
+                            ],
+                            "pattern": "^(.*)$"
+                          },
+                          "position": {
+                            "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/position",
+                            "type": "object",
+                            "title": "The Position Schema",
+                            "required": [
+                              "x",
+                              "y"
+                            ],
+                            "properties": {
+                              "x": {
+                                "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/position/properties/x",
+                                "type": "integer",
+                                "title": "The X Schema",
+                                "default": 0,
+                                "examples": [
+                                  10
+                                ]
+                              },
+                              "y": {
+                                "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/position/properties/y",
+                                "type": "integer",
+                                "title": "The Y Schema",
+                                "default": 0,
+                                "examples": [
+                                  10
+                                ]
+                              }
+                            }
+                          },
+                          "size": {
+                            "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/size",
+                            "type": "object",
+                            "title": "The Size Schema",
+                            "required": [
+                              "w",
+                              "h"
+                            ],
+                            "properties": {
+                              "w": {
+                                "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/size/properties/w",
+                                "type": "integer",
+                                "title": "The W Schema",
+                                "default": 0,
+                                "examples": [
+                                  10
+                                ]
+                              },
+                              "h": {
+                                "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/size/properties/h",
+                                "type": "integer",
+                                "title": "The H Schema",
+                                "default": 0,
+                                "examples": [
+                                  10
+                                ]
+                              }
+                            }
+                          },
+                          "image_url": {
+                            "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/image_url",
+                            "type": "string",
+                            "title": "The Image_url Schema",
+                            "default": "",
+                            "examples": [
+                              "player.png"
+                            ],
+                            "pattern": "^(.*)$"
+                          },
+                          "clickable": {
+                            "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/clickable",
+                            "type": "boolean",
+                            "title": "The Clickable Schema",
+                            "default": false,
+                            "examples": [
+                              true
+                            ]
+                          },
+                          "drag": {
+                            "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/drag",
+                            "type": "object",
+                            "title": "The Drag Schema",
+                            "required": [
+                              "draggable",
+                              "dragTo"
+                            ],
+                            "properties": {
+                              "draggable": {
+                                "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/drag/properties/draggable",
+                                "type": "boolean",
+                                "title": "The Draggable Schema",
+                                "default": false,
+                                "examples": [
+                                  true
+                                ]
+                              },
+                              "dragTo": {
+                                "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/drag/properties/dragTo",
+                                "type": "array",
+                                "title": "The Dragto Schema",
+                                "items": {
+                                  "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/drag/properties/dragTo/items",
+                                  "type": "string",
+                                  "title": "The Items Schema",
+                                  "default": "",
+                                  "examples": [
+                                    "cat"
+                                  ],
+                                  "pattern": "^(.*)$"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "alert_box": {
+                  "$id": "#/properties/response/properties/game/properties/display/properties/alert_box",
+                  "type": "object",
+                  "title": "The Alert_box Schema",
+                  "required": [
+                    "text"
+                  ],
+                  "properties": {
+                    "text": {
+                      "$id": "#/properties/response/properties/game/properties/display/properties/alert_box/properties/text",
+                      "type": "string",
+                      "title": "The Text Schema",
+                      "default": "",
+                      "examples": [
+                        "123123"
+                      ],
+                      "pattern": "^(.*)$"
+                    }
+                  }
+                },
+                "text_input": {
+                  "$id": "#/properties/response/properties/game/properties/display/properties/text_input",
+                  "type": "object",
+                  "title": "The Text_input Schema",
+                  "required": [
+                    "message_to_player"
+                  ],
+                  "properties": {
+                    "message_to_player": {
+                      "$id": "#/properties/response/properties/game/properties/display/properties/text_input/properties/message_to_player",
+                      "type": "string",
+                      "title": "The Message_to_player Schema",
+                      "default": "",
+                      "examples": [
+                        "Guess the password!"
+                      ],
+                      "pattern": "^(.*)$"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

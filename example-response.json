@@ -4,9 +4,7 @@
     "game": {
       "name": "Dummy Game",
       "author": "Teapot",
-      "game_library_id": 0,
-      "player_name": "waleko",
-      "gameId": "abcdef1234567890",
+      "gameId": "47e7ce50763101ef364ea7a5dc6b1c57f99797037fab7d62437ca1674b3fe35a",
       "status": "Playing/Finished",
       "display":
       {
@@ -24,6 +22,10 @@
                 "x": 10,
                 "y": 10
               },
+              "size": {
+                "w": 10,
+                "h": 10
+              },
               "image_url": "player.png",
               "clickable": true,
               "drag": {
@@ -40,11 +42,13 @@
                 "x": 80,
                 "y": 430
               },
+              "size": {
+                "w": 10,
+                "h": 10
+              },
               "image_url": "cat.png",
               "clickable": true,
-              "drag": {
-                "draggable": false
-              }
+              "draggable": false
             },
             {
               "name": "some_text",
