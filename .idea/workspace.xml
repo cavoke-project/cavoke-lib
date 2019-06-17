@@ -2,14 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b9b6a19e-0beb-4653-8e7a-7de41580c63f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/schemas/schema.json" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/cavoke/GameExecutor/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cavoke/Canvas.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/cavoke/Canvas.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cavoke/CanvasInfo.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/cavoke/CanvasInfo.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cavoke/Game.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/cavoke/Game.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cavoke/GameExecutor/GameSession.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/cavoke/GameExecutor/GameSession.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cavoke/GameExecutor/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/misc/schema.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cavoke/GameExecutor/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cavoke/Unit.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/cavoke/Unit.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cavoke/UnitCanvasInfo.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/cavoke/UnitCanvasInfo.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cavoke/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/cavoke/__init__.py" afterDir="false" />
@@ -35,10 +35,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/misc/schema.json">
+        <entry file="file://$PROJECT_DIR$/schemas/schema.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="106" column="18" lean-forward="true" selection-start-line="106" selection-start-column="18" selection-end-line="106" selection-end-column="18" />
+            <state relative-caret-position="629">
+              <caret line="118" column="15" lean-forward="true" selection-start-line="118" selection-start-column="15" selection-end-line="118" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -317,12 +317,12 @@
       <workItem from="1559749684472" duration="7051000" />
       <workItem from="1560697544238" duration="4613000" />
       <workItem from="1560702366001" duration="17169000" />
-      <workItem from="1560757271729" duration="6740000" />
+      <workItem from="1560757271729" duration="6764000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="46680000" />
+    <option name="totallyTimeSpent" value="46704000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -577,10 +577,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/misc/schema.json">
+    <entry file="file://$PROJECT_DIR$/schemas/schema.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="106" column="18" lean-forward="true" selection-start-line="106" selection-start-column="18" selection-end-line="106" selection-end-column="18" />
+        <state relative-caret-position="629">
+          <caret line="118" column="15" lean-forward="true" selection-start-line="118" selection-start-column="15" selection-end-line="118" selection-end-column="15" />
         </state>
       </provider>
     </entry>
