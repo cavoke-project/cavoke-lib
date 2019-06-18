@@ -3,7 +3,7 @@ from .Unit import Unit
 
 
 @dataclass
-class UnitCanvasInfo:
+class UnitInfo:
     unit: Unit
     prev_hash: int
 

@@ -48,8 +48,8 @@ class Unit(object):
     #         eval('self.' + methodBoolean + ' = True')
 
     @abstractmethod
-    def toDisplayDict(self):
-        return
+    def toDisplayDict(self) -> dict:
+        return {}
 
     # TODO refactor with Unit.setFunction()
     def setOnClick(self, onClick: Callable):
@@ -60,6 +60,7 @@ class Unit(object):
             self.__onClick = onClick
             self.clickable = True
 
+    @abstractmethod
     def click(self):
         if self.clickable:
             self.__onClick()
@@ -72,6 +73,7 @@ class Unit(object):
             self.__onDrag = onDrag
             self.draggable = True
 
+    @abstractmethod
     def drag(self, toUnit):
         if self.draggable:
             self.__onDrag(toUnit)
