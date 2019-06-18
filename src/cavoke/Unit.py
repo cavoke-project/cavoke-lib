@@ -1,16 +1,14 @@
 from typing import Callable
 from .exceptions import *
-from .CanvasInfo import CanvasInfo
+from .GameInfo import GameInfo
 from abc import abstractmethod
 
 
 class Unit(object):
-    def __init__(self, name: str = "", w=50, h=50,
-                 onClick: Callable = None, onDrag: Callable = None,
-                 initPayload: dict = {}):
+    def __init__(self, name: str = "", w=50, h=50, initPayload: dict = {}):
         self.name = name
         self.id = None
-        self.__canvasInfo = None
+        self.__gameInfo = None
 
         self.pos = (0, 0)
         self.x = 0
@@ -18,17 +16,13 @@ class Unit(object):
 
         self.w = w
         self.h = h
-        self.visible = True
-
-        self.setOnClick(onClick)
-        self.setOnDrag(onDrag)
         self.payload = initPayload
 
     def __repr__(self):
-        if self.__canvasInfo is None:
+        if self.__gameInfo is None:
             return '<' + str(self.__class__) + " class without a linked canvas. payload=" + repr(self.payload) + '>'
         else:
-            return '<' + str(self.__class__) + " class linked to " + self.__canvasInfo.canvas_repr + " canvas at pos=" +\
+            return '<' + str(self.__class__) + " class linked to " + self.__gameInfo.canvas_repr + " canvas at pos=" + \
                    repr(self.pos) + ". payload=" + repr(self.payload) + '>'
 
     def __hash__(self):
@@ -79,8 +73,8 @@ class Unit(object):
             self.__onDrag(toUnit)
 
     def moveTo(self, x, y):
-        if self.__canvasInfo is None:
-            raise NoCanvasWarning
+        if self.__gameInfo is None:
+            raise NoGameWarning
         self.x = x
         self.y = y
         self.pos = (x, y)
@@ -93,10 +87,10 @@ class Unit(object):
     def moveBy(self, dx, dy):
         self.moveTo(self.x + dx, self.y + dy)
 
-    def _addToCanvas(self, canvasInfo: CanvasInfo, x=0, y=0):
-        if self.__canvasInfo is None:
-            self.__canvasInfo = canvasInfo
+    def _addToCanvas(self, gameInfo: GameInfo, x=0, y=0):
+        if self.__gameInfo is None:
+            self.__gameInfo = gameInfo
             self.moveTo(x, y)
-            self.id = canvasInfo.new_unit_id
+            self.id = gameInfo.new_unit_id
         else:
-            raise UnitCanvasOverride(self, canvasInfo)
+            raise UnitCanvasOverrideWarning(self, gameInfo)

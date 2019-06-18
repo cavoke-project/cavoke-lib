@@ -8,25 +8,41 @@ class GameWarning(Warning):
     pass
 
 
-class NoCanvasError(GameError):
-    "Exception raised when game is executed without a canvas."
+class NoGameWarning(GameWarning):
+    "Warning raised when unit is used without a game."
     pass
 
 
-class NoCanvasWarning(GameWarning):
-    "Warning raised when unit is used without a canvas."
-    pass
-
-
-class UnitCanvasOverride(GameWarning):
-    "Warning raised when unit with already configured canvas gets added to another canvas"
-    def __init__(self, unit, newCanvas):
-        self.message = repr(newCanvas) + " was attempted to be linked to " + repr(unit) + " already linked to a canvas."
+class UnitCanvasOverrideWarning(GameWarning):
+    "Warning raised when unit with already configured game gets added to another game"
+    def __init__(self, unit, newGame):
+        self.message = repr(newGame) + " was attempted to be linked to " + repr(unit) + " already linked to a game."
 
     def __repr__(self):
         return self.message
 
 
-class CanvasUnitsCountExceeded(GameWarning):
-    "Warning raised when too many units on canvas."
+class GameUnitsCountExceededWarning(GameWarning):
+    "Warning raised when there are too many units in one game"
+    pass
+
+
+class GameUnitsMemoryWarning(GameWarning):
+    "Warning raised when there is a non-UnitInfo object in Game units storage"
+    pass
+
+
+class CreatorFunctionIncorrectReturnTypeError(GameError):
+    "Exception raised when creator-written function returns the type that differs from expected one"
+
+    def __init__(self, result, expected_type: str):
+        self.message = "Expected type: " + expected_type + ", got: " + repr(result) + " - which type is " +\
+                       repr(type(result).__name__) + " (" + repr(type(result))
+
+    def __repr__(self):
+        return self.message
+
+
+class UnitNotFoundError(GameError):
+    "Exception raised when no unit matches search parameters in a game."
     pass

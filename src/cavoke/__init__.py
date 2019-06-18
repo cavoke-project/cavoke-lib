@@ -8,4 +8,3 @@ __version__ = "0.0.1"
 
 from .Unit import Unit
 from .Game import Game
-from .Canvas import Canvas
