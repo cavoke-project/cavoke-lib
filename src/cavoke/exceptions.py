@@ -15,8 +15,14 @@ class NoGameWarning(GameWarning):
 
 class UnitGameOverrideWarning(GameWarning):
     "Warning raised when unit with already configured game gets added to another game"
+
     def __init__(self, unit, newGame):
-        self.message = repr(newGame) + " was attempted to be linked to " + repr(unit) + " already linked to a game."
+        self.message = (
+            repr(newGame)
+            + " was attempted to be linked to "
+            + repr(unit)
+            + " already linked to a game."
+        )
 
     def __repr__(self):
         return self.message
@@ -41,8 +47,16 @@ class GameCreatorFunctionIncorrectReturnTypeError(GameError):
     "Exception raised when creator-written function returns the type that differs from expected one"
 
     def __init__(self, result, expected_type: str):
-        self.message = "Expected type: " + expected_type + ", got: " + repr(result) + " - which type is " +\
-                       repr(type(result).__name__) + " (" + repr(type(result))
+        self.message = (
+            "Expected type: "
+            + expected_type
+            + ", got: "
+            + repr(result)
+            + " - which type is "
+            + repr(type(result).__name__)
+            + " ("
+            + repr(type(result))
+        )
 
     def __repr__(self):
         return self.message

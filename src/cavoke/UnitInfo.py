@@ -6,4 +6,3 @@ from .Unit import Unit
 class UnitInfo:
     unit: Unit
     prev_hash: int
-

@@ -23,20 +23,38 @@ class Unit(object):
 
     def __repr__(self):
         if self.__gameInfo is None:
-            return '<name=' + (self.name if self.name else "[no name given]") + '; class=' + str(
-                self.__class__) + ";no game linked>"
+            return (
+                "<name="
+                + (self.name if self.name else "[no name given]")
+                + "; class="
+                + str(self.__class__)
+                + ";no game linked>"
+            )
         else:
-            return '<id=' + self.id + '; name=' + self.name + '; class=' + str(self.__class__) + \
-                   ";game=" + self.__gameInfo.game_repr + "; pos=" + repr(self.pos) + '>'
+            return (
+                "<id="
+                + self.id
+                + "; name="
+                + self.name
+                + "; class="
+                + str(self.__class__)
+                + ";game="
+                + self.__gameInfo.game_repr
+                + "; pos="
+                + repr(self.pos)
+                + ">"
+            )
 
     @abstractmethod
     def __hash__(self):
-        return hash(hash(self.name) +
-                    hash(self.id) +
-                    hash(self.x) +
-                    hash(self.y) +
-                    hash(self.w) +
-                    hash(self.h))
+        return hash(
+            hash(self.name)
+            + hash(self.id)
+            + hash(self.x)
+            + hash(self.y)
+            + hash(self.w)
+            + hash(self.h)
+        )
 
     @abstractmethod
     def getDisplayDict(self):
@@ -44,14 +62,8 @@ class Unit(object):
             "name": self.name,
             "type": self._unit_type,
             "id": self.id,
-            "position": {
-                "x": self.x,
-                "y": self.y
-            },
-            "size": {
-                "w": self.w,
-                "h": self.h
-            }
+            "position": {"x": self.x, "y": self.y},
+            "size": {"w": self.w, "h": self.h},
         }
 
     def setOnClick(self, onClick: Callable[[], None]):

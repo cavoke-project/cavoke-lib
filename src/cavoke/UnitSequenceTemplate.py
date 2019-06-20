@@ -11,8 +11,16 @@ class UnitSequenceTemplate(Unit, list):
         res.name = name
         return res
 
-    def __init__(self, length: int, BaseClass: type, baseArgs = (),
-                 name: str = "", w=600, h=600, initPayload: dict = {}):
+    def __init__(
+        self,
+        length: int,
+        BaseClass: type,
+        baseArgs: tuple = (),
+        name: str = "",
+        w=600,
+        h=600,
+        initPayload: dict = {},
+    ):
         super().__init__(name, w, h, initPayload)
         self.length = length
         self.__BaseClass = BaseClass
