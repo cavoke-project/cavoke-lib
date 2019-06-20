@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+
 from typing import Callable
 from .exceptions import *
 from .GameInfo import GameInfo
@@ -26,6 +29,7 @@ class Unit(object):
             return '<id=' + self.id + '; name=' + self.name + '; class=' + str(self.__class__) + \
                    ";game=" + self.__gameInfo.game_repr + "; pos=" + repr(self.pos) + '>'
 
+    @abstractmethod
     def __hash__(self):
         return hash(hash(self.name) +
                     hash(self.id) +
@@ -60,7 +64,7 @@ class Unit(object):
         }
 
     # TODO refactor with Unit.setFunction()
-    def setOnClick(self, onClick: Callable):
+    def setOnClick(self, onClick: Callable[[], None]):
         if onClick is None:
             self.__onClick = lambda *args: None
             self.clickable = False
@@ -73,7 +77,7 @@ class Unit(object):
         if self.clickable:
             self.__onClick()
 
-    def setOnDrag(self, onDrag: Callable):
+    def setOnDrag(self, onDrag: Callable[[Unit], None]):
         if onDrag is None:
             self.__onDrag = lambda *args: None
             self.draggable = False

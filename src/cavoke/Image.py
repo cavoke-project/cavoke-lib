@@ -1,29 +1,21 @@
-from abc import abstractmethod
-
 from .Unit import Unit
 
 
 class Image(Unit):
-    def getDisplayDict(self) -> dict:
-        return {
-            "name": self.name,
-            "position": {
-                "x": self.x,
-                "y": self.y
-            },
-            "image_url": self.image_url,
-            "clickable": self.clickable,
-            "draggable": self.draggable
-        }
+    def __hash__(self):
+        return super().__hash__() + hash(self.image_url)
 
-    def __init__(self, image_url: str, name: str = "", w: int = None, h: int = None, initPayload: dict = {}):
-        super().__init__(name, w, h, initPayload)
-        self.image_url = image_url
-
-    @abstractmethod
     def click(self):
         pass
 
-    @abstractmethod
     def drag(self, toUnit):
         pass
+
+    def getDisplayDict(self) -> dict:
+        d = super().getDisplayDict()
+        d['image_url'] = self.image_url
+        return d
+
+    def __init__(self, image_url: str, name: str = "", w: int = -1, h: int = -1, initPayload: dict = {}):
+        super().__init__(name, w, h, initPayload)
+        self.image_url = image_url

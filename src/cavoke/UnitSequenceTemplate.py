@@ -18,6 +18,12 @@ class UnitSequenceTemplate(Unit, list):
         self.length = length
         self.__BaseClass = BaseClass
 
+    def __hash__(self):
+        h = 0
+        for e in self.units:
+            h += hash(e)
+        return h
+
     @property
     @abstractmethod
     def units(self) -> list:
