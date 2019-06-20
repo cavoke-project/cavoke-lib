@@ -16,7 +16,14 @@ def is_unit_list(unit) -> bool:
 
 
 class Game(object):
-    def __init__(self, game_name: str, creator: str, w: int = 680, h: int = 480, initPayload: dict = {}):
+    def __init__(
+        self,
+        game_name: str,
+        creator: str,
+        w: int = 680,
+        h: int = 480,
+        initPayload: dict = {},
+    ):
         self.game_name = game_name
         self.creator = creator
         self.payload = initPayload
@@ -31,7 +38,9 @@ class Game(object):
         self.__winCondition = lambda *args: None
 
     def __repr__(self):
-        return '<"' + self.game_name + '" game built using cavoke by ' + self.creator + '>'
+        return (
+            '<"' + self.game_name + '" game built using cavoke by ' + self.creator + ">"
+        )
 
     def __appointId(self, unit: Unit, x=None, y=None, depth=0):
         if depth > 2 ** 16:
@@ -42,10 +51,10 @@ class Game(object):
         if className in self.__ids_register:
             idx = self.__ids_register[className]
             self.__ids_register[className] += 1
-            unitId = className + '_' + str(idx)
+            unitId = className + "_" + str(idx)
         else:
             self.__ids_register[className] = 1
-            unitId = className + '_0'
+            unitId = className + "_0"
 
         # register the unit
         gameInfo = GameInfo(repr(self), unitId)
@@ -105,33 +114,34 @@ class Game(object):
     def clickCoordinates(self, x: int, y: int):
         for e, c in self.__ids_register.items():
             for i in range(c)[::-1]:
-                unit = self.__units[e + '_' + str(i)]
+                unit = self.__units[e + "_" + str(i)]
                 if unit.x <= x <= unit.x + self.w and unit.y <= y <= unit.y + self.h:
                     if is_unit_list(unit):
                         unit.clickCoordinates(x, y)
                     else:
                         unit.click()
+        return self.getDisplayList()
 
     def clickPos(self, pos: tuple):
         if len(pos) != 2:
             raise ValueError("pos must contain two numbers: x and y coordinates")
-        self.clickCoordinates(pos[0], pos[1])
+        return self.clickCoordinates(pos[0], pos[1])
 
     def setWinCondition(self, winCondition: Callable[[Game], GameStatus]):
         self.__winCondition = winCondition
 
     # TODO enum instead of int?
     @abstractmethod
-    def checkIfWon(self) -> int:
+    def checkIfWon(self) -> GameStatus:
         ans = self.__winCondition(self)
         if not isinstance(ans, int):
-            raise GameCreatorFunctionIncorrectReturnTypeError(ans, 'int')
+            raise GameCreatorFunctionIncorrectReturnTypeError(ans, "int")
         return ans
 
     def findUnitByLambda(self, f: Callable[[Unit], bool]):
-        searchQueue = [y for x, y in self.__units.items()]
+        searchQueue = [y.unit for x, y in self.__units.items()]
         while searchQueue:
-            unit: Unit = searchQueue.pop(0).unit
+            unit: Unit = searchQueue.pop(0)
             if f(unit):
                 return unit
             if is_unit_list(unit):
@@ -143,7 +153,7 @@ class Game(object):
 
     def findUnitById(self, unitId: str):
         return self.findUnitByLambda(lambda unit: unit.id == unitId)
-    
+
     def getAllUnits(self):
         return [y for x, y in self.__units.items()]
 

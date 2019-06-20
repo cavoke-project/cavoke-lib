@@ -12,3 +12,4 @@ from .Image import Image
 from .Grid import Grid
 from .Row import Row
 from .Column import Column
+from .GameStatus import GameStatus

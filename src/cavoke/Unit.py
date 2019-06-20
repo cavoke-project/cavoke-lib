@@ -38,20 +38,11 @@ class Unit(object):
                     hash(self.w) +
                     hash(self.h))
 
-    # FIXME evals don't work
-    # def setFunction(self, method: str, methodBoolean: str, f: Callable):
-    #     cmd = lambda pre, post: eval(pre + (' ' if pre else '') + 'self.' + method + (' ' if post else '') + post)
-    #     if f is None:
-    #         eval('self.' + method + ' = lambda *args: None')
-    #         eval('self.' + methodBoolean + ' = False')
-    #     else:
-    #         eval('self.' + method + ' = f')
-    #         eval('self.' + methodBoolean + ' = True')
-
     @abstractmethod
     def getDisplayDict(self):
         return {
             "name": self.name,
+            "type": self._unit_type,
             "id": self.id,
             "position": {
                 "x": self.x,
@@ -63,32 +54,21 @@ class Unit(object):
             }
         }
 
-    # TODO refactor with Unit.setFunction()
     def setOnClick(self, onClick: Callable[[], None]):
-        if onClick is None:
-            self.__onClick = lambda *args: None
-            self.clickable = False
-        else:
-            self.__onClick = onClick
-            self.clickable = True
+        self.click = onClick
+        self.clickable = True
 
     @abstractmethod
-    def click(self):
-        if self.clickable:
-            self.__onClick()
+    def click(self) -> None:
+        pass
 
     def setOnDrag(self, onDrag: Callable[[Unit], None]):
-        if onDrag is None:
-            self.__onDrag = lambda *args: None
-            self.draggable = False
-        else:
-            self.__onDrag = onDrag
-            self.draggable = True
+        self.drag = onDrag
+        self.draggable = True
 
     @abstractmethod
-    def drag(self, toUnit):
-        if self.draggable:
-            self.__onDrag(toUnit)
+    def drag(self, toUnit) -> bool:
+        pass
 
     def setCoordinates(self, x, y):
         if self.__gameInfo is None:
@@ -112,3 +92,8 @@ class Unit(object):
             self.id = gameInfo.new_unit_id
         else:
             raise UnitGameOverrideWarning(self, gameInfo)
+
+    @property
+    @abstractmethod
+    def _unit_type(self) -> str:
+        pass
