@@ -3,14 +3,14 @@ from src.cavoke import *
 
 class Tile(Image):
     def click(self) -> None:
-        self.setImageUrl('cross.png')
+        self.setImageUrl("cross.png")
         self.status = 1
 
     def drag(self, toUnit) -> bool:
         pass
 
     def __init__(self):
-        super().__init__('blank.png')
+        super().__init__("blank.png")
         self.status = 0
 
 
@@ -21,7 +21,7 @@ class MyGrid(Grid):
 
 class MyGame(Game):
     def __init__(self):
-        super().__init__('Dummy', 'waleko')
+        super().__init__("Dummy", "waleko")
         self.addUnit(MyGrid())
 
     def checkIfWon(self) -> GameStatus:

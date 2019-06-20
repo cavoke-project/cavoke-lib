@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="cavoke",
-    version="0.0.1",
+    version="0.1.0",
     author="Alex Kovrigin",
     author_email="a.kovrigin0@gmail.com",
     description="Python library for easy creation of text-based and table games",

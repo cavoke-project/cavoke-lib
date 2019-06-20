@@ -28,7 +28,7 @@ class Unit(object):
                 + (self.name if self.name else "[no name given]")
                 + "; class="
                 + str(self.__class__)
-                + ";no game linked>"
+                + "; no game linked>"
             )
         else:
             return (
@@ -38,7 +38,7 @@ class Unit(object):
                 + self.name
                 + "; class="
                 + str(self.__class__)
-                + ";game="
+                + "; game="
                 + self.__gameInfo.game_repr
                 + "; pos="
                 + repr(self.pos)
