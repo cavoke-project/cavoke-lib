@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b9b6a19e-0beb-4653-8e7a-7de41580c63f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/cavoke/UnitSequenceTemplate.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cavoke/Column.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/cavoke/Column.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cavoke/Game.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/cavoke/Game.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cavoke/Row.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/cavoke/Row.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cavoke/Unit.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/cavoke/Unit.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cavoke/exceptions.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/cavoke/exceptions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cavoke/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/cavoke/__init__.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,11 +20,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/cavoke/Game.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="71" lean-forward="true" selection-start-line="71" selection-end-line="71" />
+            <state relative-caret-position="108">
+              <caret line="97" selection-start-line="97" selection-end-line="102" selection-end-column="75" />
               <folding>
                 <element signature="e#0#27#0" expanded="true" />
               </folding>
@@ -35,7 +35,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/cavoke/Grid.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
+            <state relative-caret-position="119">
               <caret line="10" column="53" lean-forward="true" selection-start-line="10" selection-start-column="53" selection-end-line="10" selection-end-column="53" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
@@ -47,8 +47,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/cavoke/Column.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="33" column="37" lean-forward="true" selection-start-line="33" selection-start-column="37" selection-end-line="33" selection-end-column="37" />
+            <state relative-caret-position="408">
+              <caret line="24" lean-forward="true" selection-end-line="24" />
+              <folding>
+                <element signature="e#1#23#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/cavoke/UnitSequenceTemplate.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="17" column="14" selection-start-line="17" selection-start-column="14" selection-end-line="17" selection-end-column="14" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
@@ -68,10 +80,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/cavoke/Row.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="27" selection-end-column="32" />
+            <state relative-caret-position="306">
+              <caret line="18" column="70" selection-start-line="18" selection-start-column="69" selection-end-line="18" selection-end-column="70" />
               <folding>
-                <element signature="e#0#30#0" expanded="true" />
+                <element signature="e#0#22#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -90,7 +102,7 @@
         <entry file="file://$PROJECT_DIR$/src/cavoke/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="221">
-              <caret line="13" selection-start-line="13" selection-end-line="13" />
+              <caret line="13" column="26" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
               <folding>
                 <element signature="e#112#134#0" expanded="true" />
               </folding>
@@ -164,12 +176,14 @@
         <option value="$PROJECT_DIR$/temp_2.py" />
         <option value="$PROJECT_DIR$/temp-1.py" />
         <option value="$PROJECT_DIR$/src/cavoke/Unit.py" />
-        <option value="$PROJECT_DIR$/src/cavoke/__init__.py" />
         <option value="$PROJECT_DIR$/src/cavoke/Grid.py" />
         <option value="$PROJECT_DIR$/src/cavoke/exceptions.py" />
-        <option value="$PROJECT_DIR$/src/cavoke/Row.py" />
-        <option value="$PROJECT_DIR$/src/cavoke/Column.py" />
+        <option value="$PROJECT_DIR$/src/cavoke/UnitSequence.py" />
         <option value="$PROJECT_DIR$/src/cavoke/Game.py" />
+        <option value="$PROJECT_DIR$/src/cavoke/__init__.py" />
+        <option value="$PROJECT_DIR$/src/cavoke/Column.py" />
+        <option value="$PROJECT_DIR$/src/cavoke/Row.py" />
+        <option value="$PROJECT_DIR$/src/cavoke/UnitSequenceTemplate.py" />
       </list>
     </option>
   </component>
@@ -370,12 +384,12 @@
       <workItem from="1560863541941" duration="8734000" />
       <workItem from="1560887148475" duration="5935000" />
       <workItem from="1560980822632" duration="2783000" />
-      <workItem from="1561021659954" duration="6175000" />
+      <workItem from="1561021659954" duration="8294000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="73554000" />
+    <option name="totallyTimeSpent" value="75673000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -388,6 +402,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49684212" visible="true" weight="0.19369973" />
       <window_info id="Structure" order="1" sideWeight="0.5031579" side_tool="true" weight="0.18565683" />
@@ -445,11 +460,6 @@
           <url>file://$PROJECT_DIR$/temp_2.py</url>
           <line>1</line>
           <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/cavoke/Row.py</url>
-          <line>16</line>
-          <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/cavoke/Game.py</url>
@@ -631,22 +641,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/cavoke/__init__.py">
+    <entry file="file://$PROJECT_DIR$/src/cavoke/Grid.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" selection-start-line="13" selection-end-line="13" />
+        <state relative-caret-position="119">
+          <caret line="10" column="53" lean-forward="true" selection-start-line="10" selection-start-column="53" selection-end-line="10" selection-end-column="53" />
           <folding>
-            <element signature="e#112#134#0" expanded="true" />
+            <element signature="e#0#30#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/cavoke/Grid.py">
+    <entry file="file://$PROJECT_DIR$/src/cavoke/Game.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="53" lean-forward="true" selection-start-line="10" selection-start-column="53" selection-end-line="10" selection-end-column="53" />
+        <state relative-caret-position="108">
+          <caret line="97" selection-start-line="97" selection-end-line="102" selection-end-column="75" />
           <folding>
-            <element signature="e#0#30#0" expanded="true" />
+            <element signature="e#0#27#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cavoke/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="26" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
+          <folding>
+            <element signature="e#112#134#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -658,32 +678,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/cavoke/Row.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="27" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/cavoke/Column.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="33" column="37" lean-forward="true" selection-start-line="33" selection-start-column="37" selection-end-line="33" selection-end-column="37" />
+        <state relative-caret-position="408">
+          <caret line="24" lean-forward="true" selection-end-line="24" />
           <folding>
-            <element signature="e#0#30#0" expanded="true" />
+            <element signature="e#1#23#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/cavoke/Game.py">
+    <entry file="file://$PROJECT_DIR$/src/cavoke/Row.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="71" lean-forward="true" selection-start-line="71" selection-end-line="71" />
+        <state relative-caret-position="306">
+          <caret line="18" column="70" selection-start-line="18" selection-start-column="69" selection-end-line="18" selection-end-column="70" />
           <folding>
-            <element signature="e#0#27#0" expanded="true" />
+            <element signature="e#0#22#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/cavoke/UnitSequenceTemplate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="14" selection-start-line="17" selection-start-column="14" selection-end-line="17" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
           </folding>
         </state>
       </provider>

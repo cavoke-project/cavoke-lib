@@ -95,12 +95,13 @@ class Game(object):
     def clickUnit(self, unit):
         unit.click()
 
-    def clickCoordinates(self, x, y):
-        for e, c in self.__ids_register.items():
-            for i in range(c)[::-1]:
-                unit = self.__units[e + '_' + str(i)]
-                if unit.x <= x <= unit.x + self.w and unit.y <= y <= unit.y + self.h:
-                    return self.clickUnit(unit)
+    # def clickCoordinates(self, x, y):
+    #     for e, c in self.__ids_register.items():
+    #         for i in range(c)[::-1]:
+    #             unit = self.__units[e + '_' + str(i)]
+    #             if unit.x <= x <= unit.x + self.w and unit.y <= y <= unit.y + self.h:
+    #                 if isinstance(unit, Unit) and isinstance(unit, list):
+
 
     def clickPos(self, pos: tuple):
         if len(pos) != 2:
