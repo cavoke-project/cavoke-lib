@@ -44,10 +44,11 @@ class Game(object):
             self.__ids_register[className] = 1
             unitId = className + '_0'
 
-        # if is list (Row, Grid), then process every element separately
-        if isinstance(unit, Unit) and isinstance(unit, list):
-            self.addUnits(*unit, x=x, y=y, horizontally=unit.isHorizontal, _depth=_depth)
-            return unitId
+        # FIXME remove
+        # # if is list (Row, Grid), then process every element separately
+        # if isinstance(unit, Unit) and isinstance(unit, list):
+        #     self.addUnits(*unit, x=x, y=y, horizontally=unit.isHorizontal, _depth=_depth)
+        #     return unitId
 
         # register the unit
         gameInfo = GameInfo(repr(self), unitId)
@@ -117,3 +118,6 @@ class Game(object):
         except KeyError:
             raise UnitNotFoundError
         return unit
+    
+    def allUnits(self):
+        return [y for x, y in self.__units.items()]

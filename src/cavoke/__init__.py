@@ -10,3 +10,4 @@ from .Unit import Unit
 from .Game import Game
 from .Image import Image
 from .Grid import Grid
+from .Row import Row
