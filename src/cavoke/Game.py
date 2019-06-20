@@ -1,5 +1,6 @@
 from typing import Callable
 from abc import abstractmethod
+from math import floor
 
 from .exceptions import *
 from .Unit import Unit
@@ -27,11 +28,8 @@ class Game(object):
     def __repr__(self):
         return '<"' + self.game_name + '" game built using cavoke by ' + self.creator + '>'
 
-    # TODO add timer
-    def addUnit(self, unit: Unit, x=0, y=0, _depth=0) -> str:
-        if len(self.__units) >= 2 ** 16:
-            raise GameUnitsCountExceededWarning
-        if _depth > 2 ** 16:
+    def __appointId(self, unit: Unit, x=None, y=None, depth=0):
+        if depth > 2 ** 16:
             raise GameAddUnitDepthExceededWarning
 
         # appoint an id
@@ -44,22 +42,38 @@ class Game(object):
             self.__ids_register[className] = 1
             unitId = className + '_0'
 
-        # FIXME remove
-        # # if is list (Row, Grid), then process every element separately
-        # if isinstance(unit, Unit) and isinstance(unit, list):
-        #     self.addUnits(*unit, x=x, y=y, horizontally=unit.isHorizontal, _depth=_depth)
-        #     return unitId
-
         # register the unit
         gameInfo = GameInfo(repr(self), unitId)
+        if x is None and y is None:
+            x, y = unit.x, unit.y
         unit._addToCanvas(gameInfo, x, y)
+
+        # if unit is unit-list, then give every unit separately
+        if isinstance(unit, Unit) and isinstance(unit, list):
+            k = len(unit)
+            for i in range(k):
+                e = unit[i]
+                if not isinstance(e, Unit):
+                    raise GameUnitsArrayTypeWarning
+                if unit.isHorizontal:
+                    self.__appointId(e, x + floor(unit.w * i / k), y, depth + 1)
+                else:
+                    self.__appointId(e, x, y + floor(unit.h * i / k), depth + 1)
+        return unitId
+
+    # TODO add timer
+    def addUnit(self, unit: Unit, x=0, y=0) -> str:
+        if len(self.__units) >= 2 ** 16:
+            raise GameUnitsCountExceededWarning
+
+        unitId = self.__appointId(unit, x, y)
         self.__units[unit.id] = UnitInfo(unit, hash(unit) + 1)
         return unitId
 
-    def addUnits(self, *units: Unit, x=0, y=0, horizontally=True, _depth=0) -> list:
+    def addUnits(self, *units: Unit, x=0, y=0, horizontally=True) -> list:
         res = []
         for e in units:
-            res.append(self.addUnit(e, x, y, _depth + 1))
+            res.append(self.addUnit(e, x, y))
             if horizontally:
                 x += e.w
             else:
@@ -70,12 +84,12 @@ class Game(object):
         res = self.__prevHashUnitsDict
         for k, e in self.__units.items():
             if not isinstance(e, UnitInfo):
-                raise GameUnitsMemoryWarning
+                raise GameUnitsArrayTypeWarning
             if e.prev_hash == hash(e.unit):
                 continue
             unit: Unit = e.unit
             self.__units[unit.id].prev_hash = hash(unit)
-            res[unit.id] = unit.getDisplayDict()
+            self.__add_and_parse_unit(res, unit)
         return [y for x, y in res.items()]
 
     def clickUnit(self, unit):
@@ -107,7 +121,7 @@ class Game(object):
     def findUnitByName(self, name: str):
         for k, e in self.__units.items():
             if not isinstance(e, UnitInfo):
-                raise GameUnitsMemoryWarning
+                raise GameUnitsArrayTypeWarning
             if e.unit.name == name and name != "":
                 return e.unit
         raise UnitNotFoundError
@@ -119,5 +133,17 @@ class Game(object):
             raise UnitNotFoundError
         return unit
     
-    def allUnits(self):
+    def getAllUnits(self):
         return [y for x, y in self.__units.items()]
+
+    def __add_and_parse_unit(self, d: dict, unit: Unit, depth=0):
+        if depth > 2 ** 16:
+            raise GameAddUnitDepthExceededWarning
+        # if unit is unit-list, then give every unit separately
+        if isinstance(unit, Unit) and isinstance(unit, list):
+            for e in unit:
+                if not isinstance(e, Unit):
+                    raise GameUnitsArrayTypeWarning
+                self.__add_and_parse_unit(d, e, depth + 1)
+        else:
+            d[unit.id] = unit.getDisplayDict()

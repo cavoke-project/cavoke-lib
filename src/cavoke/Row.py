@@ -24,6 +24,9 @@ class Row(Unit, list):
     def __getitem__(self, item):
         return self.__units.__getitem__(item)
 
+    def __len__(self):
+        return len(self.__units)
+
     def __iter__(self):
         for i in range(self.items_x):
             yield self.__units[i]

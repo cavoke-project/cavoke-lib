@@ -107,4 +107,4 @@ class Unit(object):
             self.setCoordinates(x, y)
             self.id = gameInfo.new_unit_id
         else:
-            raise UnitCanvasOverrideWarning(self, gameInfo)
+            raise UnitGameOverrideWarning(self, gameInfo)

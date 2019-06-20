@@ -13,7 +13,7 @@ class NoGameWarning(GameWarning):
     pass
 
 
-class UnitCanvasOverrideWarning(GameWarning):
+class UnitGameOverrideWarning(GameWarning):
     "Warning raised when unit with already configured game gets added to another game"
     def __init__(self, unit, newGame):
         self.message = repr(newGame) + " was attempted to be linked to " + repr(unit) + " already linked to a game."
@@ -27,7 +27,7 @@ class GameUnitsCountExceededWarning(GameWarning):
     pass
 
 
-class GameUnitsMemoryWarning(GameWarning):
+class GameUnitsArrayTypeWarning(GameWarning):
     "Warning raised when there is a non-UnitInfo object in Game units storage"
     pass
 
