@@ -28,12 +28,7 @@
               },
               "image_url": "player.png",
               "clickable": true,
-              "drag": {
-                "draggable": true,
-                "dragTo": [
-                  "cat"
-                ]
-              }
+              "draggable": true
             },
             {
               "name": "cat",
@@ -59,7 +54,9 @@
               },
               "text": "Catch the cat!",
               "font": "Times New Roman",
-              "size": 17
+              "size": 17,
+              "clickable": false,
+              "draggable": true
             }
           ]
         },

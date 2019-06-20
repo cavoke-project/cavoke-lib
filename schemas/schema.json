@@ -1,137 +1,153 @@
 {
   "definitions": {
-    "unit": {
+    "image": {
       "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "type",
+        "position",
+        "size",
+        "image_url",
+        "clickable",
+        "draggable"
+      ],
       "properties": {
         "name": {
+          "$id": "#/properties/name",
           "type": "string",
-          "title": "The Name Schema",
-          "default": "",
-          "examples": [
-            "player"
-          ],
           "pattern": "^(.*)$"
         },
-        "id": {
+        "type": {
+          "$id": "#/properties/type",
           "type": "string",
-          "title": "The Name Schema",
-          "default": "",
-          "examples": [
-            "player"
-          ],
           "pattern": "^(.*)$"
         },
         "position": {
+          "$id": "#/properties/position",
           "type": "object",
-          "title": "The Position Schema",
+          "additionalProperties": false,
           "required": [
             "x",
             "y"
           ],
           "properties": {
             "x": {
-              "type": "integer",
-              "title": "The X Schema",
-              "default": 0,
-              "examples": [
-                10
-              ]
+              "$id": "#/properties/position/properties/x",
+              "type": "integer"
             },
             "y": {
-              "type": "integer",
-              "title": "The Y Schema",
-              "default": 0,
-              "examples": [
-                10
-              ]
+              "$id": "#/properties/position/properties/y",
+              "type": "integer"
             }
           }
         },
         "size": {
+          "$id": "#/properties/size",
           "type": "object",
-          "title": "The Size Schema",
+          "additionalProperties": false,
           "required": [
             "w",
             "h"
           ],
           "properties": {
             "w": {
-              "type": "integer",
-              "title": "The W Schema",
-              "default": 0,
-              "examples": [
-                10
-              ]
+              "$id": "#/properties/size/properties/w",
+              "type": "integer"
             },
             "h": {
-              "type": "integer",
-              "title": "The H Schema",
-              "default": 0,
-              "examples": [
-                10
-              ]
+              "$id": "#/properties/size/properties/h",
+              "type": "integer"
             }
           }
         },
+        "image_url": {
+          "$id": "#/properties/image_url",
+          "type": "string",
+          "pattern": "^(.*)$"
+        },
         "clickable": {
-          "type": "boolean",
-          "title": "The Clickable Schema",
-          "default": false,
-          "examples": [
-            true,
-            false
-          ]
+          "$id": "#/properties/clickable",
+          "type": "boolean"
         },
         "draggable": {
-          "type": "boolean",
-          "title": "The Draggable Schema",
-          "default": false,
-          "examples": [
-            true,
-            false
-          ]
-        }
-      },
-      "required": [
-        "name",
-        "id",
-        "position",
-        "size",
-        "clickable",
-        "draggable"
-      ]
-    },
-    "image": {
-      "type": "object",
-      "properties": {
-        "billing_address": { "$ref": "#/definitions/unit" },
-        "shipping_address": {
-          "allOf": [
-            { "$ref": "#/definitions/unit" },
-            { "properties":
-              { "image_url": { "type": "string" } },
-              "required": ["image_url"]
-            }
-          ]
+          "$id": "#/properties/draggable",
+          "type": "boolean"
         }
       }
     },
     "text": {
       "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "type",
+        "position",
+        "text",
+        "font",
+        "size",
+        "clickable",
+        "draggable"
+      ],
       "properties": {
-        "name": {"type": "string"},
-        "text": {"type": "string",
-          "default": "",
-          "examples": ["Hi!"]
+        "name": {
+          "$id": "#/properties/name",
+          "type": "string",
+          "pattern": "^(.*)$"
         },
-        "font": {"type": "string", "default": "Arial", "examples": ["Arial", "Verdana"]},
-        "size": {"type": "integer", "default": 11}
+        "type": {
+          "$id": "#/properties/type",
+          "type": "string",
+          "pattern": "^(.*)$"
+        },
+        "position": {
+          "$id": "#/properties/position",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "x",
+            "y"
+          ],
+          "properties": {
+            "x": {
+              "$id": "#/properties/position/properties/x",
+              "type": "integer"
+            },
+            "y": {
+              "$id": "#/properties/position/properties/y",
+              "type": "integer"
+            }
+          }
+        },
+        "text": {
+          "$id": "#/properties/text",
+          "type": "string",
+          "pattern": "^(.*)$"
+        },
+        "font": {
+          "$id": "#/properties/font",
+          "type": "string",
+          "pattern": "^(.*)$"
+        },
+        "size": {
+          "$id": "#/properties/size",
+          "type": "integer"
+        },
+        "clickable": {
+          "$id": "#/properties/clickable",
+          "type": "boolean"
+        },
+        "draggable": {
+          "$id": "#/properties/draggable",
+          "type": "boolean"
+        }
       }
     }
   },
-  "$schema": "https://alexkovrigin.me/cavoke-files/schemas/root.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://alexkovrigin.me/data/cavoke/schemas/response/schema.json",
   "type": "object",
-  "title": "The Root Schema",
+  "additionalProperties": false,
   "required": [
     "status",
     "response"
@@ -140,18 +156,12 @@
     "status": {
       "$id": "#/properties/status",
       "type": "string",
-      "title": "The Status Schema",
-      "default": "",
-      "examples": [
-        "OK",
-        "Error"
-      ],
       "pattern": "^(.*)$"
     },
     "response": {
       "$id": "#/properties/response",
       "type": "object",
-      "title": "The Response Schema",
+      "additionalProperties": false,
       "required": [
         "game"
       ],
@@ -159,7 +169,7 @@
         "game": {
           "$id": "#/properties/response/properties/game",
           "type": "object",
-          "title": "The Game Schema",
+          "additionalProperties": false,
           "required": [
             "name",
             "author",
@@ -171,48 +181,27 @@
             "name": {
               "$id": "#/properties/response/properties/game/properties/name",
               "type": "string",
-              "title": "The Name Schema",
-              "default": "",
-              "examples": [
-                "Dummy Game"
-              ],
               "pattern": "^(.*)$"
             },
             "author": {
               "$id": "#/properties/response/properties/game/properties/author",
               "type": "string",
-              "title": "The Author Schema",
-              "default": "",
-              "examples": [
-                "Teapot"
-              ],
               "pattern": "^(.*)$"
             },
             "gameId": {
               "$id": "#/properties/response/properties/game/properties/gameId",
               "type": "string",
-              "title": "The Gameid Schema",
-              "default": "",
-              "examples": [
-                "47e7ce50763101ef364ea7a5dc6b1c57f99797037fab7d62437ca1674b3fe35a"
-              ],
               "pattern": "^(.*)$"
             },
             "status": {
               "$id": "#/properties/response/properties/game/properties/status",
               "type": "string",
-              "title": "The Status Schema",
-              "default": "",
-              "examples": [
-                "Playing",
-                "Finished"
-              ],
               "pattern": "^(.*)$"
             },
             "display": {
               "$id": "#/properties/response/properties/game/properties/display",
               "type": "object",
-              "title": "The Display Schema",
+              "additionalProperties": false,
               "required": [
                 "canvas",
                 "alert_box",
@@ -222,7 +211,7 @@
                 "canvas": {
                   "$id": "#/properties/response/properties/game/properties/display/properties/canvas",
                   "type": "object",
-                  "title": "The Canvas Schema",
+                  "additionalProperties": false,
                   "required": [
                     "w",
                     "h",
@@ -232,26 +221,16 @@
                   "properties": {
                     "w": {
                       "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/w",
-                      "type": "integer",
-                      "title": "The W Schema",
-                      "default": 0,
-                      "examples": [
-                        680
-                      ]
+                      "type": "integer"
                     },
                     "h": {
                       "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/h",
-                      "type": "integer",
-                      "title": "The H Schema",
-                      "default": 0,
-                      "examples": [
-                        480
-                      ]
+                      "type": "integer"
                     },
                     "background_image": {
                       "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/background_image",
                       "type": "object",
-                      "title": "The Background_image Schema",
+                      "additionalProperties": false,
                       "required": [
                         "image"
                       ],
@@ -259,11 +238,6 @@
                         "image": {
                           "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/background_image/properties/image",
                           "type": "string",
-                          "title": "The Image Schema",
-                          "default": "",
-                          "examples": [
-                            "blank"
-                          ],
                           "pattern": "^(.*)$"
                         }
                       }
@@ -271,12 +245,14 @@
                     "contents": {
                       "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents",
                       "type": "array",
-                      "title": "The Contents Schema",
                       "items": {
-                        "oneOf": [
-                          { "$ref": "#/definitions/unit" },
-                          { "$ref": "#/definitions/image" },
-                          { "$ref": "#/definitions/text" }
+                        "anyOf": [
+                          {
+                            "$ref": "#/definitions/image"
+                          },
+                          {
+                            "$ref": "#/definitions/text"
+                          }
                         ]
                       }
                     }
@@ -285,7 +261,7 @@
                 "alert_box": {
                   "$id": "#/properties/response/properties/game/properties/display/properties/alert_box",
                   "type": "object",
-                  "title": "The Alert_box Schema",
+                  "additionalProperties": false,
                   "required": [
                     "text"
                   ],
@@ -293,11 +269,6 @@
                     "text": {
                       "$id": "#/properties/response/properties/game/properties/display/properties/alert_box/properties/text",
                       "type": "string",
-                      "title": "The Text Schema",
-                      "default": "",
-                      "examples": [
-                        "123123"
-                      ],
                       "pattern": "^(.*)$"
                     }
                   }
@@ -305,7 +276,7 @@
                 "text_input": {
                   "$id": "#/properties/response/properties/game/properties/display/properties/text_input",
                   "type": "object",
-                  "title": "The Text_input Schema",
+                  "additionalProperties": false,
                   "required": [
                     "message_to_player"
                   ],
@@ -313,11 +284,6 @@
                     "message_to_player": {
                       "$id": "#/properties/response/properties/game/properties/display/properties/text_input/properties/message_to_player",
                       "type": "string",
-                      "title": "The Message_to_player Schema",
-                      "default": "",
-                      "examples": [
-                        "Guess the password!"
-                      ],
                       "pattern": "^(.*)$"
                     }
                   }
