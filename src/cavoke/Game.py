@@ -5,6 +5,8 @@ from .exceptions import *
 from .Unit import Unit
 from .GameInfo import GameInfo
 from .UnitInfo import UnitInfo
+from .Grid import Grid
+from .Row import Row
 
 
 class Game(object):
@@ -26,10 +28,10 @@ class Game(object):
         return '<"' + self.game_name + '" game built using cavoke by ' + self.creator + '>'
 
     # TODO add timer
-
-    def addUnit(self, unit: Unit, x=0, y=0) -> str:
+    def addUnit(self, unit: Unit, x=0, y=0, __depth=0) -> str:
         if len(self.__units) >= 2 ** 16:
             raise GameUnitsCountExceededWarning
+
         # appoint an id
         className = type(unit).__name__
         if className in self.__ids_register:
@@ -39,29 +41,54 @@ class Game(object):
         else:
             self.__ids_register[className] = 1
             unitId = className + '_0'
+
+        # if is list (Row, Grid), then process every element separately
+        if isinstance(unit, Unit) and isinstance(unit, list):
+            self.addUnits(*unit, x=x, y=y, horizontally=unit.isHorizontal)
+            return unitId
+
         # register the unit
         gameInfo = GameInfo(repr(self), unitId)
         unit._addToCanvas(gameInfo, x, y)
         self.__units[unit.id] = UnitInfo(unit, hash(unit) + 1)
         return unitId
 
-    def toDisplayList(self) -> list:
+    def addUnits(self, *units: Unit, x=0, y=0, horizontally=True) -> list:
+        res = []
+        for e in units:
+            res.append(self.addUnit(e, x, y))
+            if horizontally:
+                x += e.w
+            else:
+                y += e.h
+        return res
+
+    def getDisplayList(self) -> list:
         res = self.__prevHashUnitsDict
-        for e in self.__units:
+        for k, e in self.__units.items():
             if not isinstance(e, UnitInfo):
                 raise GameUnitsMemoryWarning
             if e.prev_hash == hash(e.unit):
                 continue
             unit: Unit = e.unit
             self.__units[unit.id].prev_hash = hash(unit)
-            res[unit.id] = unit.toDisplayDict()
+            res[unit.id] = unit.getDisplayDict()
         return [y for x, y in res.items()]
 
-    # def clickCoordinates(self, ):
+    def clickUnit(self, unit):
+        unit.click()
+
+    def clickCoordinates(self, x, y):
+        for e, c in self.__ids_register.items():
+            for i in range(c)[::-1]:
+                unit = self.__units[e + '_' + str(i)]
+                if unit.x <= x <= unit.x + self.w and unit.y <= y <= unit.y + self.h:
+                    return self.clickUnit(unit)
 
     def clickPos(self, pos: tuple):
         if len(pos) != 2:
             raise ValueError("pos must contain two numbers: x and y coordinates")
+        self.clickCoordinates(pos[0], pos[1])
 
     def setWinCondition(self, winCondition: Callable):
         self.__winCondition = winCondition
@@ -70,7 +97,7 @@ class Game(object):
     @abstractmethod
     def checkIfWon(self) -> int:
         ans = self.__winCondition(self)
-        if ans is not int:
+        if not isinstance(ans, int):
             raise CreatorFunctionIncorrectReturnTypeError(ans, 'int')
         return ans
 
@@ -78,14 +105,13 @@ class Game(object):
         for k, e in self.__units.items():
             if not isinstance(e, UnitInfo):
                 raise GameUnitsMemoryWarning
-            if e.unit.name == name:
+            if e.unit.name == name and name != "":
                 return e.unit
         raise UnitNotFoundError
 
     def findUnitById(self, unitId: str):
-        for k, e in self.__units.items():
-            if not isinstance(e, UnitInfo):
-                raise GameUnitsMemoryWarning
-            if e.unit.id == unitId:
-                return e.unit
-        raise UnitNotFoundError
+        try:
+            unit = self.__units[unitId]
+        except KeyError:
+            raise UnitNotFoundError
+        return unit

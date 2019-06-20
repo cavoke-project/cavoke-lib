@@ -1,127 +1,18 @@
 {
   "definitions": {
-    "Unit": {
-      "name": {
-          "type": "string",
-          "title": "The Name Schema",
-          "default": "",
-          "examples": [
-            "player"
-          ],
-          "pattern": "^(.*)$"
-        },
-      "id": {
-          "type": "string",
-          "title": "The Name Schema",
-          "default": "",
-          "examples": [
-            "player"
-          ],
-          "pattern": "^(.*)$"
-        },
-      "position": {
-          "type": "object",
-          "title": "The Position Schema",
-          "required": [
-            "x",
-            "y"
-          ],
-          "properties": {
-            "x": {
-              "type": "integer",
-              "title": "The X Schema",
-              "default": 0,
-              "examples": [
-                10
-              ]
-            },
-            "y": {
-              "type": "integer",
-              "title": "The Y Schema",
-              "default": 0,
-              "examples": [
-                10
-              ]
-            }
-          }
-        },
-      "size": {
-          "type": "object",
-          "title": "The Size Schema",
-          "required": [
-            "w",
-            "h"
-          ],
-          "properties": {
-            "w": {
-              "type": "integer",
-              "title": "The W Schema",
-              "default": 0,
-              "examples": [
-                10
-              ]
-            },
-            "h": {
-              "type": "integer",
-              "title": "The H Schema",
-              "default": 0,
-              "examples": [
-                10
-              ]
-            }
-          }
-        },
-      "clickable": {
-          "type": "boolean",
-          "title": "The Clickable Schema",
-          "default": false,
-          "examples": [
-            true
-          ]
-        },
-        "drag": {
-          "type": "object",
-          "title": "The Drag Schema",
-          "required": [
-            "draggable",
-            "dragTo"
-          ],
-          "properties": {
-            "draggable": {
-              "type": "boolean",
-              "title": "The Draggable Schema",
-              "default": false,
-              "examples": [
-                true
-              ]
-            },
-            "dragTo": {
-              "type": "array",
-              "title": "The Dragto Schema",
-              "items": {
-                "type": "string",
-                "title": "The Items Schema",
-                "default": "",
-                "examples": [
-                  "cat"
-                ],
-                "pattern": "^(.*)$"
-              }
-            }
-          }
-        }
-      },
-    "Image": {
-      "type": "Unit",
-      "required": [
-        "name",
-        "position",
-        "size",
-        "image_url"
-      ],
+    "unit": {
+      "type": "object",
       "properties": {
         "name": {
-          "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/name",
+          "type": "string",
+          "title": "The Name Schema",
+          "default": "",
+          "examples": [
+            "player"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "id": {
           "type": "string",
           "title": "The Name Schema",
           "default": "",
@@ -131,7 +22,6 @@
           "pattern": "^(.*)$"
         },
         "position": {
-          "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/position",
           "type": "object",
           "title": "The Position Schema",
           "required": [
@@ -140,7 +30,6 @@
           ],
           "properties": {
             "x": {
-              "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/position/properties/x",
               "type": "integer",
               "title": "The X Schema",
               "default": 0,
@@ -149,7 +38,6 @@
               ]
             },
             "y": {
-              "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/position/properties/y",
               "type": "integer",
               "title": "The Y Schema",
               "default": 0,
@@ -160,7 +48,6 @@
           }
         },
         "size": {
-          "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/size",
           "type": "object",
           "title": "The Size Schema",
           "required": [
@@ -169,7 +56,6 @@
           ],
           "properties": {
             "w": {
-              "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/size/properties/w",
               "type": "integer",
               "title": "The W Schema",
               "default": 0,
@@ -178,7 +64,6 @@
               ]
             },
             "h": {
-              "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/size/properties/h",
               "type": "integer",
               "title": "The H Schema",
               "default": 0,
@@ -188,22 +73,63 @@
             }
           }
         },
-        "image_url": {
-          "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/image_url",
-          "type": "string",
-          "title": "The Image_url Schema",
-          "default": "",
+        "clickable": {
+          "type": "boolean",
+          "title": "The Clickable Schema",
+          "default": false,
           "examples": [
-            "player.png"
-          ],
-          "pattern": "^(.*)$"
+            true,
+            false
+          ]
+        },
+        "draggable": {
+          "type": "boolean",
+          "title": "The Draggable Schema",
+          "default": false,
+          "examples": [
+            true,
+            false
+          ]
         }
-
+      },
+      "required": [
+        "name",
+        "id",
+        "position",
+        "size",
+        "clickable",
+        "draggable"
+      ]
+    },
+    "image": {
+      "type": "object",
+      "properties": {
+        "billing_address": { "$ref": "#/definitions/unit" },
+        "shipping_address": {
+          "allOf": [
+            { "$ref": "#/definitions/unit" },
+            { "properties":
+              { "image_url": { "type": "string" } },
+              "required": ["image_url"]
+            }
+          ]
+        }
+      }
+    },
+    "text": {
+      "type": "object",
+      "properties": {
+        "name": {"type": "string"},
+        "text": {"type": "string",
+          "default": "",
+          "examples": ["Hi!"]
+        },
+        "font": {"type": "string", "default": "Arial", "examples": ["Arial", "Verdana"]},
+        "size": {"type": "integer", "default": 11}
       }
     }
   },
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://example.com/root.json",
+  "$schema": "https://alexkovrigin.me/cavoke-files/schemas/root.json",
   "type": "object",
   "title": "The Root Schema",
   "required": [
@@ -278,7 +204,8 @@
               "title": "The Status Schema",
               "default": "",
               "examples": [
-                "Playing/Finished"
+                "Playing",
+                "Finished"
               ],
               "pattern": "^(.*)$"
             },
@@ -346,152 +273,11 @@
                       "type": "array",
                       "title": "The Contents Schema",
                       "items": {
-                        "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items",
-                        "type": "object",
-                        "title": "The Items Schema",
-                        "required": [
-                          "name",
-                          "type",
-                          "position",
-                          "size",
-                          "image_url",
-                          "clickable",
-                          "drag"
-                        ],
-                        "properties": {
-                          "name": {
-                            "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/name",
-                            "type": "string",
-                            "title": "The Name Schema",
-                            "default": "",
-                            "examples": [
-                              "player"
-                            ],
-                            "pattern": "^(.*)$"
-                          },
-                          "type": {
-                            "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/type",
-                            "type": "string",
-                            "title": "The Type Schema",
-                            "default": "",
-                            "examples": [
-                              "image"
-                            ],
-                            "pattern": "^(.*)$"
-                          },
-                          "position": {
-                            "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/position",
-                            "type": "object",
-                            "title": "The Position Schema",
-                            "required": [
-                              "x",
-                              "y"
-                            ],
-                            "properties": {
-                              "x": {
-                                "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/position/properties/x",
-                                "type": "integer",
-                                "title": "The X Schema",
-                                "default": 0,
-                                "examples": [
-                                  10
-                                ]
-                              },
-                              "y": {
-                                "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/position/properties/y",
-                                "type": "integer",
-                                "title": "The Y Schema",
-                                "default": 0,
-                                "examples": [
-                                  10
-                                ]
-                              }
-                            }
-                          },
-                          "size": {
-                            "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/size",
-                            "type": "object",
-                            "title": "The Size Schema",
-                            "required": [
-                              "w",
-                              "h"
-                            ],
-                            "properties": {
-                              "w": {
-                                "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/size/properties/w",
-                                "type": "integer",
-                                "title": "The W Schema",
-                                "default": 0,
-                                "examples": [
-                                  10
-                                ]
-                              },
-                              "h": {
-                                "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/size/properties/h",
-                                "type": "integer",
-                                "title": "The H Schema",
-                                "default": 0,
-                                "examples": [
-                                  10
-                                ]
-                              }
-                            }
-                          },
-                          "image_url": {
-                            "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/image_url",
-                            "type": "string",
-                            "title": "The Image_url Schema",
-                            "default": "",
-                            "examples": [
-                              "player.png"
-                            ],
-                            "pattern": "^(.*)$"
-                          },
-                          "clickable": {
-                            "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/clickable",
-                            "type": "boolean",
-                            "title": "The Clickable Schema",
-                            "default": false,
-                            "examples": [
-                              true
-                            ]
-                          },
-                          "drag": {
-                            "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/drag",
-                            "type": "object",
-                            "title": "The Drag Schema",
-                            "required": [
-                              "draggable",
-                              "dragTo"
-                            ],
-                            "properties": {
-                              "draggable": {
-                                "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/drag/properties/draggable",
-                                "type": "boolean",
-                                "title": "The Draggable Schema",
-                                "default": false,
-                                "examples": [
-                                  true
-                                ]
-                              },
-                              "dragTo": {
-                                "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/drag/properties/dragTo",
-                                "type": "array",
-                                "title": "The Dragto Schema",
-                                "items": {
-                                  "$id": "#/properties/response/properties/game/properties/display/properties/canvas/properties/contents/items/properties/drag/properties/dragTo/items",
-                                  "type": "string",
-                                  "title": "The Items Schema",
-                                  "default": "",
-                                  "examples": [
-                                    "cat"
-                                  ],
-                                  "pattern": "^(.*)$"
-                                }
-                              }
-                            }
-                          }
-                        }
+                        "oneOf": [
+                          { "$ref": "#/definitions/unit" },
+                          { "$ref": "#/definitions/image" },
+                          { "$ref": "#/definitions/text" }
+                        ]
                       }
                     }
                   }

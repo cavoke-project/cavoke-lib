@@ -20,16 +20,19 @@ class Unit(object):
 
     def __repr__(self):
         if self.__gameInfo is None:
-            return '<' + str(self.__class__) + " class without a linked canvas. payload=" + repr(self.payload) + '>'
+            return '<name=' + (self.name if self.name else "[no name given]") + '; class=' + str(
+                self.__class__) + ";no game linked>"
         else:
-            return '<' + str(self.__class__) + " class linked to " + self.__gameInfo.canvas_repr + " canvas at pos=" + \
-                   repr(self.pos) + ". payload=" + repr(self.payload) + '>'
+            return '<id=' + self.id + '; name=' + self.name + '; class=' + str(self.__class__) + \
+                   ";game=" + self.__gameInfo.game_repr + "; pos=" + repr(self.pos) + '>'
 
     def __hash__(self):
         return hash(hash(self.name) +
                     hash(self.id) +
                     hash(self.x) +
-                    hash(self.y))
+                    hash(self.y) +
+                    hash(self.w) +
+                    hash(self.h))
 
     # FIXME evals don't work
     # def setFunction(self, method: str, methodBoolean: str, f: Callable):
@@ -42,8 +45,19 @@ class Unit(object):
     #         eval('self.' + methodBoolean + ' = True')
 
     @abstractmethod
-    def toDisplayDict(self) -> dict:
-        return {}
+    def getDisplayDict(self):
+        return {
+            "name": self.name,
+            "id": self.id,
+            "position": {
+                "x": self.x,
+                "y": self.y
+            },
+            "size": {
+                "w": self.w,
+                "h": self.h
+            }
+        }
 
     # TODO refactor with Unit.setFunction()
     def setOnClick(self, onClick: Callable):
@@ -72,25 +86,25 @@ class Unit(object):
         if self.draggable:
             self.__onDrag(toUnit)
 
-    def moveTo(self, x, y):
+    def setCoordinates(self, x, y):
         if self.__gameInfo is None:
             raise NoGameWarning
         self.x = x
         self.y = y
         self.pos = (x, y)
 
-    def moveToPos(self, pos: tuple):
+    def setPosition(self, pos: tuple):
         if len(pos) != 2:
             raise ValueError("pos must contain two numbers: x and y coordinates")
-        self.moveTo(pos[0], pos[1])
+        self.setCoordinates(pos[0], pos[1])
 
     def moveBy(self, dx, dy):
-        self.moveTo(self.x + dx, self.y + dy)
+        self.setCoordinates(self.x + dx, self.y + dy)
 
     def _addToCanvas(self, gameInfo: GameInfo, x=0, y=0):
         if self.__gameInfo is None:
             self.__gameInfo = gameInfo
-            self.moveTo(x, y)
+            self.setCoordinates(x, y)
             self.id = gameInfo.new_unit_id
         else:
             raise UnitCanvasOverrideWarning(self, gameInfo)

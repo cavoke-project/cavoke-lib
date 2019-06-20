@@ -53,6 +53,10 @@
             {
               "name": "some_text",
               "type": "text",
+              "position": {
+                "x": 80,
+                "y": 430
+              },
               "text": "Catch the cat!",
               "font": "Times New Roman",
               "size": 17
