@@ -28,9 +28,11 @@ class Game(object):
         return '<"' + self.game_name + '" game built using cavoke by ' + self.creator + '>'
 
     # TODO add timer
-    def addUnit(self, unit: Unit, x=0, y=0, __depth=0) -> str:
+    def addUnit(self, unit: Unit, x=0, y=0, _depth=0) -> str:
         if len(self.__units) >= 2 ** 16:
             raise GameUnitsCountExceededWarning
+        if _depth > 2 ** 16:
+            raise GameAddUnitDepthExceededWarning
 
         # appoint an id
         className = type(unit).__name__
@@ -44,7 +46,7 @@ class Game(object):
 
         # if is list (Row, Grid), then process every element separately
         if isinstance(unit, Unit) and isinstance(unit, list):
-            self.addUnits(*unit, x=x, y=y, horizontally=unit.isHorizontal)
+            self.addUnits(*unit, x=x, y=y, horizontally=unit.isHorizontal, _depth=_depth)
             return unitId
 
         # register the unit
@@ -53,10 +55,10 @@ class Game(object):
         self.__units[unit.id] = UnitInfo(unit, hash(unit) + 1)
         return unitId
 
-    def addUnits(self, *units: Unit, x=0, y=0, horizontally=True) -> list:
+    def addUnits(self, *units: Unit, x=0, y=0, horizontally=True, _depth=0) -> list:
         res = []
         for e in units:
-            res.append(self.addUnit(e, x, y))
+            res.append(self.addUnit(e, x, y, _depth + 1))
             if horizontally:
                 x += e.w
             else:
@@ -98,7 +100,7 @@ class Game(object):
     def checkIfWon(self) -> int:
         ans = self.__winCondition(self)
         if not isinstance(ans, int):
-            raise CreatorFunctionIncorrectReturnTypeError(ans, 'int')
+            raise GameCreatorFunctionIncorrectReturnTypeError(ans, 'int')
         return ans
 
     def findUnitByName(self, name: str):

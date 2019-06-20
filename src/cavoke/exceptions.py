@@ -32,7 +32,12 @@ class GameUnitsMemoryWarning(GameWarning):
     pass
 
 
-class CreatorFunctionIncorrectReturnTypeError(GameError):
+class GameAddUnitDepthExceededWarning(GameWarning):
+    "Warning raised when depth of added unit-list is too big"
+    pass
+
+
+class GameCreatorFunctionIncorrectReturnTypeError(GameError):
     "Exception raised when creator-written function returns the type that differs from expected one"
 
     def __init__(self, result, expected_type: str):
