@@ -53,7 +53,7 @@ class Game(object):
             '<"' + self.game_name + '" game built using cavoke by ' + self.creator + ">"
         )
 
-    def __appointId(self, unit: Unit, x: int = None, y:int=None, depth=0) -> str:
+    def __appointId(self, unit: Unit, x: int = None, y: int = None, depth=0) -> str:
         """
         Appoints id for unit (even unit-list) and registers game for every unit and sub-unit
         :param unit: Unit for registering
@@ -97,7 +97,7 @@ class Game(object):
 
     # TODO add timer for game
 
-    def addUnit(self, unit: Unit, x:int=0, y:int=0) -> str:
+    def addUnit(self, unit: Unit, x: int = 0, y: int = 0) -> str:
         """
         Adds unit to game's memory
         :param unit: unit to be added
@@ -112,7 +112,9 @@ class Game(object):
         self.__units[unit.id] = UnitInfo(unit, hash(unit) + 1)
         return unitId
 
-    def addUnits(self, *units: Unit, x:int=0, y:int=0, horizontally:bool=True) -> list[str]:
+    def addUnits(
+        self, *units: Unit, x: int = 0, y: int = 0, horizontally: bool = True
+    ) -> list[str]:
         """
         Adds units to game's memory horizontally or vertically
         :param units: units to be added
@@ -130,7 +132,9 @@ class Game(object):
                 y += e.h
         return res
 
-    def addUnitList(self, unit_list: list[Unit], x:int=0, y:int=0, horizontally:bool=True) -> list[str]:
+    def addUnitList(
+        self, unit_list: list[Unit], x: int = 0, y: int = 0, horizontally: bool = True
+    ) -> list[str]:
         """
         Adds units to game's memory horizontally or vertically
         :rtype: list[str]
@@ -166,29 +170,28 @@ class Game(object):
         :return: response as dict according to ../../schemas/schema.json
         """
         return {
-          "status": "OK",
-          "response": {
-            "game": {
-              "name": self.game_name,
-              "author": self.creator,
-              "gameId": "47e7ce50763101ef364ea7a5dc6b1c57f99797037fab7d62437ca1674b3fe35a",  # FIXME
-              "status": self.checkGameStatus().name,
-              "display":
-              {
-                "canvas": {
-                  "w": self.w,
-                  "h": self.h,
-                  "contents": self.getDisplayList()
-                }  # ,  FIXME
-                # "alert_box": {
-                #   "text": "123123"
-                # },
-                # "text_input": {
-                #   "message_to_player": "Guess the password!"
-                # }
-              }
-            }
-          }
+            "status": "OK",
+            "response": {
+                "game": {
+                    "name": self.game_name,
+                    "author": self.creator,
+                    "gameId": "47e7ce50763101ef364ea7a5dc6b1c57f99797037fab7d62437ca1674b3fe35a",  # FIXME
+                    "status": self.checkGameStatus().name,
+                    "display": {
+                        "canvas": {
+                            "w": self.w,
+                            "h": self.h,
+                            "contents": self.getDisplayList(),
+                        }  # ,  FIXME
+                        # "alert_box": {
+                        #   "text": "123123"
+                        # },
+                        # "text_input": {
+                        #   "message_to_player": "Guess the password!"
+                        # }
+                    },
+                }
+            },
         }
 
     def clickUnitId(self, unitId: str):
