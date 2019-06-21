@@ -8,6 +8,16 @@ from .exceptions import *
 
 
 class Unit(object):
+    @property
+    @abstractmethod
+    def _unit_type(self) -> str:
+        """
+        Unit type property. :warning It's not just type(Unit), but the object type of unit. It's used for
+        Unit.getDisplayDict() and is declared only in direct Unit inherents (e.g. Image, Text). FIXME typo
+        Do not change it, unless you know what you're doing!
+        """
+        pass
+
     def __init__(self, name: str = "", w: int = 50, h: int = 50, init_payload=None):
         """
         Constructor for Unit
@@ -24,10 +34,10 @@ class Unit(object):
 
         self.__x = 0
         self.__y = 0
-
         self.__w = w
         self.__h = h
-        self.__payload = init_payload
+
+        self.payload = init_payload
 
     def __repr__(self):
         if self.__gameInfo is None:
@@ -162,11 +172,6 @@ class Unit(object):
             raise UnitGameOverrideWarning(self, gameInfo)
 
     @property
-    @abstractmethod
-    def _unit_type(self) -> str:
-        pass
-
-    @property
     def name(self):
         return self.__name
 
@@ -193,7 +198,3 @@ class Unit(object):
     @property
     def h(self):
         return self.__h
-
-    @property
-    def payload(self):
-        return self.__payload

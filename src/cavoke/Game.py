@@ -10,6 +10,8 @@ from .Unit import Unit
 from .UnitInfo import UnitInfo
 from .exceptions import *
 
+# TODO super-parent register
+
 
 class Game(object):
     def __init__(
@@ -18,7 +20,7 @@ class Game(object):
         creator: str,
         w: int = 680,
         h: int = 480,
-        init_payload: dict = {},
+        init_payload=None,
     ):
         """
         Constructor for Game class
@@ -28,6 +30,9 @@ class Game(object):
         :param h: Canvas height
         :param init_payload: initial payload of the game
         """
+        if init_payload is None:
+            init_payload = {}
+
         self.__game_name = game_name
         self.__creator = creator
         self.__payload = init_payload

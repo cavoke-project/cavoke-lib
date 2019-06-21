@@ -45,10 +45,10 @@ class UnitListTemplate(Unit, list):
         self.__BaseClass = BaseClass
 
     def __hash__(self):
-        h = 0
+        sum_hash = 0
         for e in self.units:
-            h += hash(e)
-        return h
+            sum_hash += hash(e)
+        return sum_hash
 
     @property
     @abstractmethod
@@ -96,8 +96,12 @@ class UnitListTemplate(Unit, list):
     def getDisplayDict(self):
         raise NotImplementedError
 
+    # TODO add abstracts
     def click(self) -> None:
         raise NotImplementedError
 
     def drag(self, toUnit) -> bool:
+        raise NotImplementedError
+
+    def _unit_type(self) -> str:
         raise NotImplementedError
