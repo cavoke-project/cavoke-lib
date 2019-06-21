@@ -211,11 +211,10 @@
                 "canvas": {
                   "$id": "#/properties/response/properties/game/properties/display/properties/canvas",
                   "type": "object",
-                  "additionalProperties": false,
+                  "additionalProperties": true,
                   "required": [
                     "w",
                     "h",
-                    "background_image",
                     "contents"
                   ],
                   "properties": {
@@ -232,7 +231,7 @@
                       "type": "object",
                       "additionalProperties": false,
                       "required": [
-                        "image"
+                        "image_url"
                       ],
                       "properties": {
                         "image": {

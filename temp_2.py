@@ -24,7 +24,7 @@ class MyGame(Game):
         super().__init__("Dummy", "waleko")
         self.addUnit(MyGrid())
 
-    def checkIfWon(self) -> GameStatus:
+    def checkGameStatus(self) -> GameStatus:
         grid = self.findUnitByName("grid")
         if grid[0][0].status == 1:
             return GameStatus.WON

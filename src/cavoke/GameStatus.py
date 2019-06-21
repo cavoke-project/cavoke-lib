@@ -6,3 +6,4 @@ class GameStatus(Enum):
     WON = auto()
     LOST = auto()
     FINISHED = auto()
+    UNKNOWN = auto()

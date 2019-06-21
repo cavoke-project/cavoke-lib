@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-
-from typing import Callable
-from .exceptions import *
-from .GameInfo import GameInfo
 from abc import abstractmethod
+from typing import Callable
+
+from .GameInfo import GameInfo
+from .exceptions import *
 
 
 class Unit(object):

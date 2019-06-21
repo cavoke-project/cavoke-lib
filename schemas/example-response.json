@@ -11,9 +11,6 @@
         "canvas": {
           "w": 680,
           "h": 480,
-          "background_image": {
-            "image": "blank"
-          },
           "contents": [
             {
               "name": "player",
