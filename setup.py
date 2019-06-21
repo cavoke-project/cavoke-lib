@@ -15,7 +15,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     package_dir={"": "src"},
     python_requires=">=3.7, <4",
-    requires=["dataclasses>=0.6"],
+    requires=["dataclasses"],
     classifiers=[
         "Intended Audience :: Developers",
         "Programming Language :: Python :: 3.7",

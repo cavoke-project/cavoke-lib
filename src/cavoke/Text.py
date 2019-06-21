@@ -26,9 +26,9 @@ class Text(Unit):
         name: str = "",
         size: int = 11,
         font: str = "Arial",
-        initPayload: dict = {},
+        init_payload: dict = {},
     ):
-        super().__init__(name, 50, 50, initPayload)
+        super().__init__(name, 50, 50, init_payload)
         self.__text = text
         self.__size = size
         self.__font = font

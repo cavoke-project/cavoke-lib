@@ -3,8 +3,17 @@ from abc import abstractmethod
 from .Unit import Unit
 
 
-class UnitSequenceTemplate(Unit, list):
+class UnitListTemplate(Unit, list):
     def genSub(self, BaseClass: type, baseArgs: tuple, w, h, name):
+        """
+        Generates child object of type BaseClass
+        :param BaseClass: class of childs
+        :param baseArgs: arguments for BaseClass constructor
+        :param w: child's width
+        :param h: child's height
+        :param name: child's name
+        :return: child
+        """
         res = BaseClass(*baseArgs)
         res.w = w
         res.h = h
@@ -19,9 +28,19 @@ class UnitSequenceTemplate(Unit, list):
         name: str = "",
         w=600,
         h=600,
-        initPayload: dict = {},
+        init_payload: dict = {},
     ):
-        super().__init__(name, w, h, initPayload)
+        """
+        Constructor for UnitListTemplate
+        :param length: length of list
+        :param BaseClass: class of list element
+        :param baseArgs: arguments for elements
+        :param name: list name
+        :param w: list width
+        :param h: list height
+        :param init_payload: initial list payload
+        """
+        super().__init__(name, w, h, init_payload)
         self.length = length
         self.__BaseClass = BaseClass
 
@@ -53,9 +72,18 @@ class UnitSequenceTemplate(Unit, list):
 
     @abstractmethod
     def getIndexByCoordinates(self, x, y) -> int:
+        """
+        Abstract method that gets index for element in list by coordinates on game canvas
+        :param x: x coordinate
+        :param y: y coordinate
+        """
         pass
 
     def clickCoordinates(self, x, y):
+        """
+        Process click on coordinates. Gets child unit, that was clicked and calls its click() method,
+        or clickCoordinates() method if unit-list. :param x: :param y: :return:
+        """
         if not (self.x <= x <= self.x + self.w and self.y <= y <= self.y + self.h):
             return None
         i = self.getIndexByCoordinates(x, y)
@@ -66,10 +94,10 @@ class UnitSequenceTemplate(Unit, list):
             unit.click()
 
     def getDisplayDict(self):
-        pass
+        raise NotImplementedError
 
     def click(self) -> None:
-        pass
+        raise NotImplementedError
 
     def drag(self, toUnit) -> bool:
-        pass
+        raise NotImplementedError

@@ -12,7 +12,7 @@ class Grid(Column, list):
         name: str = "",
         w=600,
         h=600,
-        initPayload: dict = {},
+        init_payload: dict = {},
     ):
         super().__init__(
             items_y,
@@ -21,5 +21,5 @@ class Grid(Column, list):
             name,
             w,
             h,
-            initPayload,
+            init_payload,
         )

@@ -16,7 +16,7 @@ class Tile(Image):
 
 class MyGrid(Grid):
     def __init__(self):
-        super().__init__(3, 3, Tile, (), "grid", initPayload={"marked": 0})
+        super().__init__(3, 3, Tile, (), "grid", init_payload={"marked": 0})
 
 
 class MyGame(Game):

@@ -27,7 +27,7 @@ class Image(Unit):
         name: str = "",
         w: int = -1,
         h: int = -1,
-        initPayload: dict = {},
+        init_payload: dict = {},
     ):
-        super().__init__(name, w, h, initPayload)
+        super().__init__(name, w, h, init_payload)
         self.__image_url = image_url

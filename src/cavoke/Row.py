@@ -1,9 +1,9 @@
 from math import floor
 
-from .UnitSequenceTemplate import UnitSequenceTemplate
+from .UnitListTemplate import UnitListTemplate
 
 
-class Row(UnitSequenceTemplate):
+class Row(UnitListTemplate):
     @property
     def isHorizontal(self) -> bool:
         return True
@@ -23,9 +23,9 @@ class Row(UnitSequenceTemplate):
         name: str = "",
         w=600,
         h=600,
-        initPayload: dict = {},
+        init_payload: dict = {},
     ):
-        super().__init__(items_x, BaseClass, baseArgs, name, w, h, initPayload)
+        super().__init__(items_x, BaseClass, baseArgs, name, w, h, init_payload)
         self.items_y = items_x
         self.__units = [
             self.genSub(BaseClass, baseArgs, w // items_x, h, name + "_" + str(i))

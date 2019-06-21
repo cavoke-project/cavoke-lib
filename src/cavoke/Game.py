@@ -11,15 +11,6 @@ from .UnitInfo import UnitInfo
 from .exceptions import *
 
 
-def is_unit_list(unit) -> bool:
-    """
-    Checks if unit is unit-list
-    :param unit: test subject
-    :return: returns boolean if is unit-list
-    """
-    return isinstance(unit, Unit) and isinstance(unit, list)
-
-
 class Game(object):
     def __init__(
         self,
@@ -37,12 +28,12 @@ class Game(object):
         :param h: Canvas height
         :param init_payload: initial payload of the game
         """
-        self.game_name = game_name
-        self.creator = creator
-        self.payload = init_payload
+        self.__game_name = game_name
+        self.__creator = creator
+        self.__payload = init_payload
 
-        self.w = w
-        self.h = h
+        self.__w = w
+        self.__h = h
 
         self.__units = {}
         self.__ids_register = {}
@@ -52,48 +43,6 @@ class Game(object):
         return (
             '<"' + self.game_name + '" game built using cavoke by ' + self.creator + ">"
         )
-
-    def __appointId(self, unit: Unit, x: int = None, y: int = None, depth=0) -> str:
-        """
-        Appoints id for unit (even unit-list) and registers game for every unit and sub-unit
-        :param unit: Unit for registering
-        :param x: x coordinate for unit
-        :param y: y coordinate for unit
-        :param depth: recursion depth (must be <= 256 or else - exception)
-        :return: returns units unitId as str
-        """
-        # check recursion depth
-        if depth > 2 ** 8:
-            raise GameAddUnitDepthExceededWarning
-
-        # appoint an id
-        className = type(unit).__name__
-        if className in self.__ids_register:
-            idx = self.__ids_register[className]
-            self.__ids_register[className] += 1
-            unitId = className + "_" + str(idx)
-        else:
-            self.__ids_register[className] = 1
-            unitId = className + "_0"
-
-        # register the unit
-        gameInfo = GameInfo(repr(self), unitId)
-        if x is None and y is None:
-            x, y = unit.x, unit.y
-        unit._addToCanvas(gameInfo, x, y)
-
-        # if unit is unit-list, then process every unit separately
-        if is_unit_list(unit):
-            k = len(unit)
-            for i in range(k):
-                e = unit[i]
-                if not isinstance(e, Unit):
-                    raise GameUnitsArrayTypeWarning
-                if unit.isHorizontal:
-                    self.__appointId(e, x + floor(unit.w * i / k), y, depth + 1)
-                else:
-                    self.__appointId(e, x, y + floor(unit.h * i / k), depth + 1)
-        return unitId
 
     # TODO add timer for game
 
@@ -300,3 +249,78 @@ class Game(object):
                 self.__add_and_parse_unit(d, e, depth + 1)
         else:
             d[unit.id] = unit.getDisplayDict()
+
+    def __appointId(self, unit: Unit, x: int = None, y: int = None, depth=0) -> str:
+        """
+        Appoints id for unit (even unit-list) and registers game for every unit and sub-unit
+        :param unit: Unit for registering
+        :param x: x coordinate for unit
+        :param y: y coordinate for unit
+        :param depth: recursion depth (must be <= 256 or else - exception)
+        :return: returns units unitId as str
+        """
+        # check recursion depth
+        if depth > 2 ** 8:
+            raise GameAddUnitDepthExceededWarning
+
+        # appoint an id
+        className = type(unit).__name__
+        if className in self.__ids_register:
+            idx = self.__ids_register[className]
+            self.__ids_register[className] += 1
+            unitId = className + "_" + str(idx)
+        else:
+            self.__ids_register[className] = 1
+            unitId = className + "_0"
+
+        # register the unit
+        gameInfo = GameInfo(repr(self), unitId)
+        if x is None and y is None:
+            x, y = unit.x, unit.y
+        unit._addToCanvas(gameInfo, x, y)
+
+        # if unit is unit-list, then process every unit separately
+        if is_unit_list(unit):
+            k = len(unit)
+            for i in range(k):
+                e = unit[i]
+                if not isinstance(e, Unit):
+                    raise GameUnitsArrayTypeWarning
+                if unit.isHorizontal:
+                    self.__appointId(e, x + floor(unit.w * i / k), y, depth + 1)
+                else:
+                    self.__appointId(e, x, y + floor(unit.h * i / k), depth + 1)
+        return unitId
+
+    @property
+    def game_name(self):
+        return self.__game_name
+
+    @property
+    def creator(self):
+        return self.__creator
+
+    @property
+    def payload(self):
+        return self.__payload
+
+    @property
+    def w(self):
+        return self.__w
+
+    @property
+    def h(self):
+        return self.__h
+
+    @property
+    def units(self):
+        return self.__units
+
+
+def is_unit_list(unit) -> bool:
+    """
+    Checks if unit is unit-list
+    :param unit: test subject
+    :return: returns boolean if is unit-list
+    """
+    return isinstance(unit, Unit) and isinstance(unit, list)
