@@ -13,7 +13,7 @@ class Unit(object):
     def _unit_type(self) -> str:
         """
         Unit type property. :warning It's not just type(Unit), but the object type of unit. It's used for
-        Unit.getDisplayDict() and is declared only in direct Unit inherents (e.g. Image, Text). FIXME typo
+        Unit.getDisplayDict() and is declared only in direct Unit inheritors (e.g. Image, Text).
         Do not change it, unless you know what you're doing!
         """
         pass
