@@ -18,7 +18,6 @@ class Tile(Image):
             self.status = TileStatus.PLAYERMARKED
             self.setImageUrl(self.getImageUrl())
 
-
     def drag(self, toUnit: Unit) -> bool:
         pass
 

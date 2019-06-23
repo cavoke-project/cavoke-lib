@@ -10,8 +10,6 @@ from .Unit import Unit
 from .UnitInfo import UnitInfo
 from .exceptions import *
 
-# TODO super-parent register
-
 
 class Game(object):
     def __init__(
@@ -43,6 +41,7 @@ class Game(object):
         self.__units = {}
         self.__ids_register = {}
         self.__prevHashUnitsDict = {}
+        self.__childToDirectChild = {}
 
     def __repr__(self):
         return (
@@ -255,7 +254,7 @@ class Game(object):
         else:
             d[unit.id] = unit.getDisplayDict()
 
-    def __appointId(self, unit: Unit, x: int = None, y: int = None, depth=0) -> str:
+    def __appointId(self, unit: Unit, x: int = None, y: int = None, depth=0, parent=None) -> str:
         """
         Appoints id for unit (even unit-list) and registers game for every unit and sub-unit
         :param unit: Unit for registering
@@ -264,6 +263,8 @@ class Game(object):
         :param depth: recursion depth (must be <= 256 or else - exception)
         :return: returns units unitId as str
         """
+        if not parent:
+            parent = [self]
         # check recursion depth
         if depth > 2 ** 8:
             raise GameAddUnitDepthExceededWarning
@@ -282,7 +283,8 @@ class Game(object):
         gameInfo = GameInfo(repr(self), unitId)
         if x is None and y is None:
             x, y = unit.x, unit.y
-        unit._addToCanvas(gameInfo, x, y)
+
+        unit._addToCanvas(gameInfo, parent, x, y)
 
         # if unit is unit-list, then process every unit separately
         if is_unit_list(unit):
@@ -291,11 +293,15 @@ class Game(object):
                 e = unit[i]
                 if not isinstance(e, Unit):
                     raise GameUnitsArrayTypeWarning
+                # recursion is safe as depth is increasing
                 if unit.isHorizontal:
-                    self.__appointId(e, x + floor(unit.w * i / k), y, depth + 1)
+                    self.__appointId(e, x + floor(unit.w * i / k), y, depth + 1, parent.copy() + [unit])
                 else:
-                    self.__appointId(e, x, y + floor(unit.h * i / k), depth + 1)
+                    self.__appointId(e, x, y + floor(unit.h * i / k), depth + 1, parent.copy() + [unit])
         return unitId
+
+    def _addChild(self, child: Unit, direct_child: Unit) -> None:
+        self.__childToDirectChild[child] = direct_child
 
     @property
     def game_name(self):

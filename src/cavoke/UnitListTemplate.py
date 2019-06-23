@@ -15,9 +15,9 @@ class UnitListTemplate(Unit, list):
         :return: child
         """
         res = BaseClass(*baseArgs)
-        res.w = w
-        res.h = h
-        res.name = name
+        res.__w = w
+        res.__h = h
+        res.__name = name
         return res
 
     def __init__(
@@ -44,10 +44,12 @@ class UnitListTemplate(Unit, list):
         self.length = length
         self.__BaseClass = BaseClass
 
+        self.__childToDirectChild = {}
+
     def __hash__(self):
-        sum_hash = 0
+        sum_hash = super().__hash__()
         for e in self.units:
-            sum_hash += hash(e)
+            sum_hash += hash(e) * (hash(e) % 7 - 1)
         return sum_hash
 
     @property
@@ -105,3 +107,10 @@ class UnitListTemplate(Unit, list):
 
     def _unit_type(self) -> str:
         raise NotImplementedError
+
+    # TODO docs
+    def childToDirectChild(self, child: Unit) -> Unit:
+        return self.__childToDirectChild[child]
+
+    def _addChild(self, child: Unit, direct_child: Unit) -> None:
+        self.__childToDirectChild[child] = direct_child

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from abc import abstractmethod
 from typing import Callable
+from random import randrange
 
 from .GameInfo import GameInfo
 from .exceptions import *
@@ -39,39 +40,42 @@ class Unit(object):
 
         self.payload = init_payload
 
+        self.__unique_seed = randrange(100000)
+
     def __repr__(self):
         if self.__gameInfo is None:
             return (
-                "<name="
-                + (self.name if self.name else "[no name given]")
-                + "; class="
-                + str(self.__class__)
-                + "; no game linked>"
+                    "<name="
+                    + (self.name if self.name else "[no name given]")
+                    + "; class="
+                    + str(self.__class__)
+                    + "; no game linked>"
             )
         else:
             return (
-                "<id="
-                + self.id
-                + "; name="
-                + self.name
-                + "; class="
-                + str(self.__class__)
-                + "; game="
-                + self.__gameInfo.game_repr
-                + "; pos="
-                + repr(self.pos)
-                + ">"
+                    "<id="
+                    + self.id
+                    + "; name="
+                    + self.name
+                    + "; class="
+                    + str(self.__class__)
+                    + "; game="
+                    + self.__gameInfo.game_repr
+                    + "; pos="
+                    + repr(self.pos)
+                    + ">"
             )
 
     @abstractmethod
     def __hash__(self):
         return hash(
-            hash(self.name)
-            + hash(self.id)
-            + hash(self.x)
-            + hash(self.y)
-            + hash(self.w)
-            + hash(self.h)
+            hash(self.name) * 3
+            + hash(self.id) * 7
+            + hash(str(self.x)) * 2
+            + hash(str(self.y)) * 5
+            + hash(str(self.w)) * 11
+            + hash(str(self.h)) * 13
+            + hash(str(self.__unique_seed)) * 17
         )
 
     @property
@@ -156,20 +160,25 @@ class Unit(object):
         """
         self.setCoordinates(self.x + dx, self.y + dy)
 
-    def _addToCanvas(self, gameInfo: GameInfo, x=0, y=0):
+    # TODO rewrite docs & comment
+    def _addToCanvas(self, gameInfo: GameInfo, parents: list, x: int = 0, y: int = 0):
         """
         Function called when unit is added to canvas.
-        :warning Do not call the function, unless you know what you're doing!  FIXME
+        :warning Do not call the function, unless you know what you're doing!  FIXME doxygen
         :param gameInfo: GameInfo
         :param x: x coordinate
         :param y: y coordinate
         """
-        if self.__gameInfo is None:
-            self.__gameInfo = gameInfo
-            self.setCoordinates(x, y)
-            self.__id = gameInfo.new_unit_id
-        else:
+        if self.__gameInfo is not None:
             raise UnitGameOverrideWarning(self, gameInfo)
+        parents.append(self)
+
+        self.__gameInfo = gameInfo
+        self.setCoordinates(x, y)
+        self.__id = gameInfo.new_unit_id
+
+        for i in range(len(parents) - 1):
+            parents[i]._addChild(self, parents[i + 1])
 
     @property
     def name(self):
