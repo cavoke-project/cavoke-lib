@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from abc import abstractmethod
 from math import floor
-from typing import Callable
+from typing import Callable, Tuple, List
 
 from .GameInfo import GameInfo
 from .GameStatus import GameStatus
@@ -62,7 +62,9 @@ class Game(object):
             raise GameUnitsCountExceededWarning
 
         unitId = self.__appointId(unit, x, y)
-        self.__units[unit.id] = UnitInfo(unit, hash(unit) + 1)
+        # +1 to make __units store different prev_hash, so when getDisplayDict() is called, the unit repr will be
+        # generated
+        self.__units[unit.id] = UnitInfo(unit, unit.fullHash() + 1)
         return unitId
 
     def addUnits(
@@ -86,11 +88,11 @@ class Game(object):
         return res
 
     def addUnitList(
-        self, unit_list: list[Unit], x: int = 0, y: int = 0, horizontally: bool = True
-    ) -> list[str]:
+        self, unit_list: List[Unit], x: int = 0, y: int = 0, horizontally: bool = True
+    ) -> List[str]:
         """
         Adds units to game's memory horizontally or vertically
-        :rtype: list[str]
+        :rtype: List[str]
         :param unit_list: list of units to be added
         :param x: x start coordinate
         :param y: y start coordinate
@@ -99,20 +101,20 @@ class Game(object):
         """
         return self.addUnits(*unit_list, x=x, y=y, horizontally=horizontally)
 
-    def getDisplayList(self) -> list[Unit]:
+    def getDisplayList(self) -> List[Unit]:
         """
         Gets the list of units to be displayed on canvas
-        :rtype: list[Unit]
+        :rtype: List[Unit]
         :return: list of Units
         """
         res = self.__prevHashUnitsDict
         for k, e in self.__units.items():
             if not isinstance(e, UnitInfo):
                 raise GameUnitsArrayTypeWarning
-            if e.prev_hash == hash(e.unit):
+            if e.prev_hash == e.unit.fullHash():
                 continue
             unit: Unit = e.unit
-            self.__units[unit.id].prev_hash = hash(unit)
+            self.__units[unit.id].prev_hash = unit.fullHash()
             self.__add_and_parse_unit(res, unit)
         return [y for x, y in res.items()]
 
@@ -155,7 +157,11 @@ class Game(object):
         :return: gets response for client-side
         """
         unit = self.findUnitById(unitId)
-        unit.click()
+        direct_child = self.__childToDirectChild[unit]
+        if is_unit_list(direct_child):
+            direct_child.click(unit)
+        else:
+            direct_child.click()
         return self.getResponse()
 
     def clickCoordinates(self, x: int, y: int):
@@ -227,10 +233,10 @@ class Game(object):
         """
         return self.findUnitByLambda(lambda unit: unit.id == unitId)
 
-    def getAllUnits(self) -> list[Unit]:
+    def getAllUnits(self) -> List[Unit]:
         """
         Gets all units in game's memory. :warning Unit-lists not expanded! FIXME doxygen
-        :rtype: list[Unit]
+        :rtype: List[Unit]
         :return: returns list of units
         """
         return [y.unit for x, y in self.__units.items()]
@@ -254,7 +260,9 @@ class Game(object):
         else:
             d[unit.id] = unit.getDisplayDict()
 
-    def __appointId(self, unit: Unit, x: int = None, y: int = None, depth=0, parent=None) -> str:
+    def __appointId(
+        self, unit: Unit, x: int = None, y: int = None, depth=0, parent=None
+    ) -> str:
         """
         Appoints id for unit (even unit-list) and registers game for every unit and sub-unit
         :param unit: Unit for registering
@@ -295,9 +303,21 @@ class Game(object):
                     raise GameUnitsArrayTypeWarning
                 # recursion is safe as depth is increasing
                 if unit.isHorizontal:
-                    self.__appointId(e, x + floor(unit.w * i / k), y, depth + 1, parent.copy() + [unit])
+                    self.__appointId(
+                        e,
+                        x + floor(unit.w * i / k),
+                        y,
+                        depth + 1,
+                        parent.copy() + [unit],
+                    )
                 else:
-                    self.__appointId(e, x, y + floor(unit.h * i / k), depth + 1, parent.copy() + [unit])
+                    self.__appointId(
+                        e,
+                        x,
+                        y + floor(unit.h * i / k),
+                        depth + 1,
+                        parent.copy() + [unit],
+                    )
         return unitId
 
     def _addChild(self, child: Unit, direct_child: Unit) -> None:

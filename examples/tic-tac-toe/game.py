@@ -13,11 +13,6 @@ class Tile(Image):
     def draggable(self) -> bool:
         return False
 
-    def click(self) -> None:
-        if not self.status == TileStatus.BLANK:
-            self.status = TileStatus.PLAYERMARKED
-            self.setImageUrl(self.getImageUrl())
-
     def drag(self, toUnit: Unit) -> bool:
         pass
 

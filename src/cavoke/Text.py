@@ -2,7 +2,7 @@ from .Unit import Unit
 
 
 class Text(Unit):
-    def __hash__(self):
+    def fullHash(self):
         return super().__hash__() + hash(self.text) + hash(self.size) + hash(self.font)
 
     def getDisplayDict(self):

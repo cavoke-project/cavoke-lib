@@ -1,6 +1,8 @@
 from math import floor
+from typing import List
 
 from .UnitListTemplate import UnitListTemplate
+from .Unit import Unit
 
 
 class Column(UnitListTemplate):
@@ -9,7 +11,7 @@ class Column(UnitListTemplate):
         return False
 
     @property
-    def units(self) -> list:
+    def units(self) -> List[Unit]:
         return self.__units
 
     def getIndexByCoordinates(self, x, y) -> int:

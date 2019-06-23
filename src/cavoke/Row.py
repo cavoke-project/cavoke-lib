@@ -1,6 +1,8 @@
 from math import floor
+from typing import List, Tuple
 
 from .UnitListTemplate import UnitListTemplate
+from .Unit import Unit
 
 
 class Row(UnitListTemplate):
@@ -9,7 +11,7 @@ class Row(UnitListTemplate):
         return True
 
     @property
-    def units(self) -> list:
+    def units(self) -> List[Unit]:
         return self.__units
 
     def getIndexByCoordinates(self, x, y) -> int:

@@ -1,4 +1,5 @@
 from abc import abstractmethod
+from typing import List
 
 from .Unit import Unit
 
@@ -15,9 +16,9 @@ class UnitListTemplate(Unit, list):
         :return: child
         """
         res = BaseClass(*baseArgs)
-        res.__w = w
-        res.__h = h
-        res.__name = name
+        res.setW(w)
+        res.setH(h)
+        res.setName(name)
         return res
 
     def __init__(
@@ -40,13 +41,16 @@ class UnitListTemplate(Unit, list):
         :param h: list height
         :param init_payload: initial list payload
         """
+        if not issubclass(BaseClass, Unit):
+            raise ValueError("BaseClass must be inherited from Unit")
+
         super().__init__(name, w, h, init_payload)
         self.length = length
         self.__BaseClass = BaseClass
 
         self.__childToDirectChild = {}
 
-    def __hash__(self):
+    def fullHash(self):
         sum_hash = super().__hash__()
         for e in self.units:
             sum_hash += hash(e) * (hash(e) % 7 - 1)
@@ -54,7 +58,7 @@ class UnitListTemplate(Unit, list):
 
     @property
     @abstractmethod
-    def units(self) -> list:
+    def units(self) -> List[Unit]:
         pass
 
     @property
@@ -98,19 +102,22 @@ class UnitListTemplate(Unit, list):
     def getDisplayDict(self):
         raise NotImplementedError
 
-    # TODO add abstracts
-    def click(self) -> None:
-        raise NotImplementedError
+    @abstractmethod
+    def click(self, unit: Unit = None) -> None:
+        if unit is None or unit == self:
+            raise NotImplementedError
+        direct_child = self.__childToDirectChild[unit]
+        if isinstance(direct_child, list) and isinstance(direct_child, Unit):
+            direct_child.click(unit)
+        else:
+            direct_child.click()
 
+    # TODO add drag
     def drag(self, toUnit) -> bool:
         raise NotImplementedError
 
     def _unit_type(self) -> str:
         raise NotImplementedError
-
-    # TODO docs
-    def childToDirectChild(self, child: Unit) -> Unit:
-        return self.__childToDirectChild[child]
 
     def _addChild(self, child: Unit, direct_child: Unit) -> None:
         self.__childToDirectChild[child] = direct_child

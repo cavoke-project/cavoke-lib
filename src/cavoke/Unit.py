@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import abstractmethod
-from typing import Callable
+from typing import Callable, Tuple, List
 from random import randrange
 
 from .GameInfo import GameInfo
@@ -40,42 +40,49 @@ class Unit(object):
 
         self.payload = init_payload
 
-        self.__unique_seed = randrange(100000)
+        self.__unique = randrange(100000)
 
     def __repr__(self):
         if self.__gameInfo is None:
             return (
-                    "<name="
-                    + (self.name if self.name else "[no name given]")
-                    + "; class="
-                    + str(self.__class__)
-                    + "; no game linked>"
+                "<name="
+                + (self.name if self.name else "[no name given]")
+                + "; class="
+                + str(self.__class__)
+                + "; no game linked>"
             )
         else:
             return (
-                    "<id="
-                    + self.id
-                    + "; name="
-                    + self.name
-                    + "; class="
-                    + str(self.__class__)
-                    + "; game="
-                    + self.__gameInfo.game_repr
-                    + "; pos="
-                    + repr(self.pos)
-                    + ">"
+                "<id="
+                + self.id
+                + "; name="
+                + self.name
+                + "; class="
+                + str(self.__class__)
+                + "; game="
+                + self.__gameInfo.game_repr
+                + "; pos="
+                + repr(self.pos)
+                + ">"
             )
 
-    @abstractmethod
     def __hash__(self):
+        # simple hash for checking if same Unit
+        return hash(str(+hash(self.id) * 2 + hash(str(self.__unique)) * 3))
+
+    @abstractmethod
+    def fullHash(self):
+        # complex hash for checking if unit had changed
         return hash(
-            hash(self.name) * 3
-            + hash(self.id) * 7
-            + hash(str(self.x)) * 2
-            + hash(str(self.y)) * 5
-            + hash(str(self.w)) * 11
-            + hash(str(self.h)) * 13
-            + hash(str(self.__unique_seed)) * 17
+            str(
+                hash(self.name) * 3
+                + hash(self.id) * 7
+                + hash(str(self.x)) * 2
+                + hash(str(self.y)) * 5
+                + hash(str(self.w)) * 11
+                + hash(str(self.h)) * 13
+                + hash(str(self.__unique)) * 17
+            )
         )
 
     @property
@@ -143,7 +150,7 @@ class Unit(object):
         self.__x = x
         self.__y = y
 
-    def setPosition(self, pos: tuple):
+    def setPosition(self, pos: Tuple[int, int]):
         """
         Sets new position of unit
         :param pos: tuple of coordinates: (x, y)
@@ -181,15 +188,15 @@ class Unit(object):
             parents[i]._addChild(self, parents[i + 1])
 
     @property
-    def name(self):
+    def name(self) -> str:
         return self.__name
 
     @property
-    def id(self):
+    def id(self) -> str:
         return self.__id
 
     @property
-    def pos(self):
+    def pos(self) -> Tuple[int, int]:
         return self.x, self.y
 
     @property
@@ -207,3 +214,18 @@ class Unit(object):
     @property
     def h(self):
         return self.__h
+
+    def setName(self, name: str):
+        self.__name = name
+
+    def setX(self, x: int):
+        self.__x = x
+
+    def setY(self, y: int):
+        self.__y = y
+
+    def setW(self, w: int):
+        self.__w = w
+
+    def setH(self, h: int):
+        self.__h = h
