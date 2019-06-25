@@ -3,6 +3,7 @@ from enum import Enum, auto
 
 from random import shuffle
 
+
 class TileStatus(Enum):
     BLANK = auto()
     PLAYERMARKED = auto()

@@ -53,7 +53,7 @@ class UnitListTemplate(Unit, list):
     def fullHash(self):
         sum_hash = super().__hash__()
         for e in self.units:
-            sum_hash += hash(e) * (hash(e) % 7 - 1)
+            sum_hash += e.fullHash()
         return sum_hash
 
     @property
