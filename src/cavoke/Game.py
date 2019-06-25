@@ -7,7 +7,6 @@ from typing import Callable, Tuple, List, Dict
 from .GameInfo import GameInfo
 from .GameStatus import GameStatus
 from .Unit import Unit
-from .UnitInfo import UnitInfo
 from .exceptions import *
 
 
@@ -39,9 +38,10 @@ class Game(object):
         self.__h = h
 
         self.__units: Dict[str, Unit] = {}
-        self.__ids_register = {}
-        self.__prevHashUnitsDict = {}
-        self.__childToDirectChild = {}
+        self.__ids_register: Dict[str, int] = {}
+        self.__prevDisplayDict: Dict[str, dict] = {}
+        self.__childToDirectChild: Dict[Unit, Unit] = {}
+        self.__prevHashDict: Dict[str, int] = {}
 
     def __repr__(self):
         return (
@@ -67,7 +67,7 @@ class Game(object):
 
     def addUnits(
         self, *units: Unit, x: int = 0, y: int = 0, horizontally: bool = True
-    ) -> list[str]:
+    ) -> List[str]:
         """
         Adds units to game's memory horizontally or vertically
         :param units: units to be added
@@ -99,24 +99,30 @@ class Game(object):
         """
         return self.addUnits(*unit_list, x=x, y=y, horizontally=horizontally)
 
-    def getDisplayList(self) -> List[Unit]:
+    def getDisplayList(self) -> List[dict]:
         """
         Gets the list of units to be displayed on canvas
-        :rtype: List[Unit]
-        :return: list of Units
+        :rtype: List[Dict]
+        :return: list of display dicts
         """
-        # FIXME
-        res = self.__prevHashUnitsDict
-        a = [y for x, y in self.__units.items()]
-        for k, e in self.__units.items():
-            if not isinstance(e, UnitInfo):
-                raise GameUnitsArrayTypeWarning
-            if e.prev_hash == e.unit.fullHash():
-                continue
-            unit: Unit = e.unit
-            self.__units[unit.id].prev_hash = unit.fullHash()
-            self.__add_and_parse_unit(res, unit)
+        res = self.__prevDisplayDict
+        self.__add_and_parse_unit(res, self.getAllUnits())
         return [y for x, y in res.items()]
+
+    def __add_and_parse_unit(self, d: dict, unit_list: List[Unit], depth=0) -> None:
+        if depth > 2 ** 16:
+            raise GameAddUnitDepthExceededWarning
+        # if unit is unit-list, then give every unit separately
+        for e in unit_list:
+            if not isinstance(e, Unit):
+                raise GameUnitsArrayTypeWarning
+            if self.__prevHashDict[e.id] == e.fullHash():
+                continue
+            self.__prevHashDict[e.id] = e.fullHash()
+            if is_unit_list(e):
+                self.__add_and_parse_unit(d, e, depth + 1)
+            else:
+                d[e.id] = e.getDisplayDict()
 
     def getResponse(self) -> dict:
         """
@@ -149,7 +155,7 @@ class Game(object):
             },
         }
 
-    def clickUnitId(self, unitId: str):
+    def clickUnitId(self, unitId: str) -> dict:
         """
         Click on unit by unit's id
         [!!!] Used by server
@@ -164,7 +170,7 @@ class Game(object):
             direct_child.click()
         return self.getResponse()
 
-    def clickCoordinates(self, x: int, y: int):
+    def clickCoordinates(self, x: int, y: int) -> dict:
         """
         Click unit by coordinates
         :param x: x coordinate
@@ -181,7 +187,7 @@ class Game(object):
                         unit.click()
         return self.getResponse()
 
-    def clickPos(self, pos: tuple):
+    def clickPos(self, pos: tuple) -> dict:
         """
         Click unit by position
         :param pos: position (tuple of two ints: x and y coordinates)
@@ -239,24 +245,7 @@ class Game(object):
         :rtype: List[Unit]
         :return: returns list of units
         """
-        return [y.unit for x, y in self.__units.items()]
-
-    def __add_and_parse_unit(self, d: dict, unit_list: List[Unit], depth=0):
-        if depth > 2 ** 16:
-            raise GameAddUnitDepthExceededWarning
-        # if unit is unit-list, then give every unit separately
-        for e in unit_list:
-            if not isinstance(e, Unit):
-                raise GameUnitsArrayTypeWarning
-            if e.prev_hash == e.unit.fullHash(): # FIXME add prev_hash to unit
-                continue
-            unit: Unit = e.unit
-            self.__units[unit.id].prev_hash = unit.fullHash()
-            # recursion is safe as depth is increasing
-            if is_unit_list(e):
-                self.__add_and_parse_unit(d, e, depth + 1)
-            else:
-                d[e.id] = e.getDisplayDict()
+        return [y for x, y in self.__units.items()]
 
     def __appointId(
         self, unit: Unit, x: int = None, y: int = None, depth=0, parent=None
@@ -316,6 +305,10 @@ class Game(object):
                         depth + 1,
                         parent.copy() + [unit],
                     )
+
+        # set incorrect hash to make displayDict render
+        self.__prevHashDict[unit.id] = unit.fullHash() + 1
+
         return unitId
 
     def _addChild(self, child: Unit, direct_child: Unit) -> None:

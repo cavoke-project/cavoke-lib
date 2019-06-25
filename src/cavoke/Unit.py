@@ -39,7 +39,6 @@ class Unit(object):
         self.__h = h
 
         self.payload = init_payload
-        self._prev_fullHash = None
 
         self.__unique = randrange(100000)
 
@@ -168,23 +167,27 @@ class Unit(object):
         """
         self.setCoordinates(self.x + dx, self.y + dy)
 
-    # TODO rewrite docs & comment
     def _addToCanvas(self, gameInfo: GameInfo, parents: list, x: int = 0, y: int = 0):
         """
         Function called when unit is added to canvas.
         :warning Do not call the function, unless you know what you're doing!  FIXME doxygen
-        :param gameInfo: GameInfo
+        :param gameInfo: Info about parent game
+        :param parents: Unit or game parents
         :param x: x coordinate
         :param y: y coordinate
         """
+        # check if Unit is linked to another game
         if self.__gameInfo is not None:
             raise UnitGameOverrideWarning(self, gameInfo)
+        # add self as parent for easier coding
         parents.append(self)
 
+        # init Unit
         self.__gameInfo = gameInfo
         self.setCoordinates(x, y)
         self.__id = gameInfo.new_unit_id
 
+        # add child to parents
         for i in range(len(parents) - 1):
             parents[i]._addChild(self, parents[i + 1])
 
