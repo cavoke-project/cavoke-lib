@@ -100,7 +100,7 @@ class UnitListTemplate(Unit, list):
             unit.click()
 
     def getDisplayDict(self):
-        raise NotImplementedError
+        pass
 
     @abstractmethod
     def click(self, unit: Unit = None) -> None:
@@ -114,10 +114,10 @@ class UnitListTemplate(Unit, list):
 
     # TODO add drag
     def drag(self, toUnit) -> bool:
-        raise NotImplementedError
+        pass
 
     def _unit_type(self) -> str:
-        raise NotImplementedError
+        pass
 
     def _addChild(self, child: Unit, direct_child: Unit) -> None:
         self.__childToDirectChild[child] = direct_child

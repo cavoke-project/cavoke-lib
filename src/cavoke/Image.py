@@ -7,7 +7,7 @@ class Image(Unit):
         return "image"
 
     def fullHash(self):
-        return super().__hash__() + hash(self.image_url)
+        return super().fullHash() + hash(self.image_url)
 
     def getDisplayDict(self) -> dict:
         d = super().getDisplayDict()

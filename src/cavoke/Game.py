@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from abc import abstractmethod
 from math import floor
-from typing import Callable, Tuple, List
+from typing import Callable, Tuple, List, Dict
 
 from .GameInfo import GameInfo
 from .GameStatus import GameStatus
@@ -38,7 +38,7 @@ class Game(object):
         self.__w = w
         self.__h = h
 
-        self.__units = {}
+        self.__units: Dict[str, Unit] = {}
         self.__ids_register = {}
         self.__prevHashUnitsDict = {}
         self.__childToDirectChild = {}
@@ -62,9 +62,7 @@ class Game(object):
             raise GameUnitsCountExceededWarning
 
         unitId = self.__appointId(unit, x, y)
-        # +1 to make __units store different prev_hash, so when getDisplayDict() is called, the unit repr will be
-        # generated
-        self.__units[unit.id] = UnitInfo(unit, unit.fullHash() + 1)
+        self.__units[unit.id] = unit
         return unitId
 
     def addUnits(
@@ -107,7 +105,9 @@ class Game(object):
         :rtype: List[Unit]
         :return: list of Units
         """
+        # FIXME
         res = self.__prevHashUnitsDict
+        a = [y for x, y in self.__units.items()]
         for k, e in self.__units.items():
             if not isinstance(e, UnitInfo):
                 raise GameUnitsArrayTypeWarning
@@ -241,24 +241,22 @@ class Game(object):
         """
         return [y.unit for x, y in self.__units.items()]
 
-    def __add_and_parse_unit(self, d: dict, unit: Unit, depth=0):
-        """
-
-        :param d:
-        :param unit:
-        :param depth:
-        """
+    def __add_and_parse_unit(self, d: dict, unit_list: List[Unit], depth=0):
         if depth > 2 ** 16:
             raise GameAddUnitDepthExceededWarning
         # if unit is unit-list, then give every unit separately
-        if is_unit_list(unit):
-            for e in unit:
-                if not isinstance(e, Unit):
-                    raise GameUnitsArrayTypeWarning
-                # recursion is safe as depth is increasing
+        for e in unit_list:
+            if not isinstance(e, Unit):
+                raise GameUnitsArrayTypeWarning
+            if e.prev_hash == e.unit.fullHash(): # FIXME add prev_hash to unit
+                continue
+            unit: Unit = e.unit
+            self.__units[unit.id].prev_hash = unit.fullHash()
+            # recursion is safe as depth is increasing
+            if is_unit_list(e):
                 self.__add_and_parse_unit(d, e, depth + 1)
-        else:
-            d[unit.id] = unit.getDisplayDict()
+            else:
+                d[e.id] = e.getDisplayDict()
 
     def __appointId(
         self, unit: Unit, x: int = None, y: int = None, depth=0, parent=None

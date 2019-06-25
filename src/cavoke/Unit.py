@@ -39,6 +39,7 @@ class Unit(object):
         self.__h = h
 
         self.payload = init_payload
+        self._prev_fullHash = None
 
         self.__unique = randrange(100000)
 
