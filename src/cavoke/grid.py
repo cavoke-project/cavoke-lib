@@ -1,5 +1,5 @@
-from .Column import Column
-from .Row import Row
+from .column import Column
+from .row import Row
 
 
 class Grid(Column, list):

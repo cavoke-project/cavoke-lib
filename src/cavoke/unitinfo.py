@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from .Unit import Unit
+from .unit import Unit
 
 
 @dataclass

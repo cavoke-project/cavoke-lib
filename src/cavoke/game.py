@@ -4,9 +4,9 @@ from abc import abstractmethod
 from math import floor
 from typing import Callable, Tuple, List, Dict
 
-from .GameInfo import GameInfo
-from .GameStatus import GameStatus
-from .Unit import Unit
+from .gameinfo import GameInfo
+from .gamestatus import GameStatus
+from .unit import Unit
 from .exceptions import *
 
 

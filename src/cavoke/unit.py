@@ -4,7 +4,7 @@ from abc import abstractmethod
 from typing import Callable, Tuple, List
 from random import randrange
 
-from .GameInfo import GameInfo
+from .gameinfo import GameInfo
 from .exceptions import *
 
 

@@ -1,8 +1,8 @@
 from math import floor
 from typing import List, Tuple
 
-from .UnitListTemplate import UnitListTemplate
-from .Unit import Unit
+from .unitlisttemplate import UnitListTemplate
+from .unit import Unit
 
 
 class Row(UnitListTemplate):
