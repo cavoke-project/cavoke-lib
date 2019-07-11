@@ -4,6 +4,7 @@ cavoke
 
 __author__ = "Alex Kovrigin (a.kovrigin0@gmail.com)"
 __license__ = "MIT"
+__version__ = "0.1.1"
 
 from .column import Column
 from .game import Game
